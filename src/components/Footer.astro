@@ -1,0 +1,17 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="py-12 px-6 border-t border-slate-200 dark:border-slate-800">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+    <p class="text-slate-500 dark:text-slate-500 text-sm font-medium">
+      © {currentYear} Edinson Medina Chinga. Hecho con <span class="text-red-500">♥</span> y Astro.
+    </p>
+    
+    <div class="flex gap-8">
+      <a href="#hero" class="text-slate-400 hover:text-slate-900 dark:hover:text-white text-sm transition-colors">Inicio</a>
+      <a href="#proyectos" class="text-slate-400 hover:text-slate-900 dark:hover:text-white text-sm transition-colors">Proyectos</a>
+      <a href="#stack" class="text-slate-400 hover:text-slate-900 dark:hover:text-white text-sm transition-colors">Stack</a>
+    </div>
+  </div>
+</footer>

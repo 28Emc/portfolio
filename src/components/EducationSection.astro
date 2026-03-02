@@ -1,0 +1,94 @@
+---
+import { GraduationCap, Languages, Award, ShieldCheck } from '@lucide/astro';
+
+const education = [
+  {
+    degree: 'Profesional Técnico en Desarrollo de Sistemas de la Información',
+    institution: 'Instituto SISE, Lima, Perú',
+    period: 'Agosto 2016 – Agosto 2019'
+  }
+];
+
+const languages = [
+  { name: 'Español', level: 'Nativo' },
+  { name: 'Italiano', level: 'Avanzado' },
+  { name: 'Inglés', level: 'Intermedio (Lectura y escritura técnica)' }
+];
+
+const certifications = [
+  {
+    name: 'Scrum Fundamentals Certified',
+    issuer: 'SCRUMstudy',
+    id: '736468',
+    date: 'Octubre 2019'
+  }
+];
+---
+
+<section id="educacion" class="section-padding bg-slate-100/30 dark:bg-slate-900/10">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="text-sm font-bold text-accent uppercase tracking-widest mb-3">Formación</h2>
+      <p class="text-3xl font-bold dark:text-white">Educación, Idiomas & Certificaciones</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <!-- Educación -->
+      <div class="space-y-6">
+        <h3 class="text-xl font-bold dark:text-white flex items-center gap-3">
+          <GraduationCap class="text-accent" /> Educación
+        </h3>
+        {education.map(item => (
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm">
+            <h4 class="text-lg font-bold dark:text-white mb-1 leading-tight">{item.degree}</h4>
+            <p class="text-slate-500 dark:text-slate-400 font-medium text-sm">{item.institution}</p>
+            <p class="text-slate-400 dark:text-slate-500 text-xs mt-2 uppercase font-bold tracking-widest">{item.period}</p>
+          </div>
+        ))}
+
+        <h3 class="text-xl font-bold dark:text-white flex items-center gap-3 pt-6">
+          <Languages class="text-accent" /> Idiomas
+        </h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {languages.map(lang => (
+            <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 text-center">
+              <p class="font-bold dark:text-white text-sm">{lang.name}</p>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">{lang.level}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Certificaciones & Logros -->
+      <div class="space-y-6">
+        <h3 class="text-xl font-bold dark:text-white flex items-center gap-3">
+          <Award class="text-accent" /> Certificaciones
+        </h3>
+        <div class="space-y-4">
+          {certifications.map(cert => (
+            <div class="p-6 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm group hover:border-accent/40 transition-colors">
+              <div class="flex items-start gap-4">
+                <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 text-accent shrink-0">
+                  <ShieldCheck size={24} />
+                </div>
+                <div>
+                  <h4 class="text-lg font-bold dark:text-white mb-1 group-hover:text-accent transition-colors">{cert.name}</h4>
+                  <p class="text-slate-500 dark:text-slate-400 font-medium text-sm">ID: {cert.id} <span class="mx-2 text-slate-300">•</span> {cert.date}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="p-8 rounded-3xl bg-slate-900 text-white dark:bg-accent dark:text-slate-950 mt-12 relative overflow-hidden group">
+          <div class="absolute -right-8 -bottom-8 opacity-20 group-hover:scale-110 transition-transform duration-500">
+            <Award size={120} />
+          </div>
+          <p class="text-xs font-bold uppercase tracking-[0.2em] mb-4 opacity-70">Metodologías</p>
+          <p class="text-xl font-bold leading-tight">Scrum, Kanban & Waterfall</p>
+          <p class="text-sm mt-4 opacity-70">Experiencia entregando valor constante en entornos ágiles y tradicionales.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

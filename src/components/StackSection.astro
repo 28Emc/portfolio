@@ -1,0 +1,37 @@
+---
+import { stack } from '../data/stack';
+import { Database, Layout, Server, Cloud, Boxes } from '@lucide/astro';
+
+const categoryIcons = [Layout, Server, Database, Cloud, Boxes];
+---
+
+<section id="stack" class="section-padding">
+  <div class="text-center mb-16">
+    <h2 class="text-sm font-bold text-accent uppercase tracking-widest mb-3">Ecosistema</h2>
+    <p class="text-4xl font-bold dark:text-white">Stack Tecnológico</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {stack.map((group, index) => {
+      const Icon = categoryIcons[index % categoryIcons.length];
+      return (
+        <div class="p-8 rounded-3xl border border-slate-200 dark:border-slate-800 hover:border-accent transition-colors">
+          <div class="flex items-center gap-4 mb-8">
+            <div class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-white">
+              <Icon size={24} />
+            </div>
+            <h3 class="text-xl font-bold dark:text-white">{group.category}</h3>
+          </div>
+          
+          <div class="flex flex-wrap gap-3">
+            {group.skills.map(skill => (
+              <span class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 text-sm font-medium">
+                {skill}
+              </span>
+            ))}
+          </div>
+        </div>
+      );
+    })}
+  </div>
+</section>

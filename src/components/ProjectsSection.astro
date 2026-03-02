@@ -1,0 +1,86 @@
+---
+import { projects } from '../data/projects';
+import { ExternalLink, CheckCircle2, AlertCircle, Lightbulb, Star } from '@lucide/astro';
+
+const featuredProjects = projects.filter(p => p.isFeatured);
+const otherProjects = projects.filter(p => !p.isFeatured);
+---
+
+<section id="proyectos" class="section-padding bg-slate-100/30 dark:bg-slate-900/10">
+  <div class="text-center mb-16">
+    <h2 class="text-sm font-bold text-accent uppercase tracking-widest mb-3">Portafolio</h2>
+    <p class="text-4xl font-bold dark:text-white">Proyectos Destacados</p>
+  </div>
+
+  <div class="space-y-20">
+    <!-- Featured Projects -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      {featuredProjects.map((project) => (
+        <div class="glass-card flex flex-col rounded-3xl overflow-hidden group hover:border-accent transition-all ring-2 ring-accent/10 border-accent/20">
+          <div class="p-8 flex-1">
+            <div class="flex justify-between items-start mb-6">
+              <div class="flex items-center gap-2">
+                <Star size={16} class="text-accent fill-accent" />
+                <h3 class="text-2xl font-bold dark:text-white group-hover:text-accent transition-colors">{project.title}</h3>
+              </div>
+            </div>
+            
+            <p class="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed text-sm">
+              {project.description}
+            </p>
+  
+            <div class="space-y-4 mb-4">
+              <div class="flex gap-4">
+                <div class="mt-1 text-red-400 shrink-0"><AlertCircle size={16} /></div>
+                <div>
+                  <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Problema</p>
+                  <p class="text-xs text-slate-700 dark:text-slate-300 font-medium">{project.problem}</p>
+                </div>
+              </div>
+              <div class="flex gap-4">
+                <div class="mt-1 text-blue-400 shrink-0"><Lightbulb size={16} /></div>
+                <div>
+                  <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Solución</p>
+                  <p class="text-xs text-slate-700 dark:text-slate-300 font-medium">{project.solution}</p>
+                </div>
+              </div>
+              <div class="flex gap-4">
+                <div class="mt-1 text-green-400 shrink-0"><CheckCircle2 size={16} /></div>
+                <div>
+                  <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Resultado</p>
+                  <p class="text-xs text-slate-700 dark:text-slate-300 font-medium">{project.result}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="p-6 bg-slate-50 dark:bg-slate-800/20 border-t border-slate-100 dark:border-slate-800 flex flex-wrap gap-2">
+            {project.technologies.slice(0, 4).map(tech => (
+              <span class="text-[10px] font-semibold px-2 py-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-500 rounded-full">
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Secondary Projects -->
+    <div>
+      <h3 class="text-xl font-bold dark:text-white mb-8 border-l-4 border-slate-300 pl-4">Otros proyectos relevantes</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {otherProjects.map((project) => (
+          <div class="glass-card p-6 rounded-2xl group hover:border-slate-300 transition-all border-dashed border-2">
+            <h4 class="text-lg font-bold dark:text-white mb-2 group-hover:text-accent transition-colors">{project.title}</h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4 line-clamp-2">{project.description}</p>
+            <div class="flex flex-wrap gap-1">
+              {project.technologies.slice(0, 3).map(tech => (
+                <span class="text-[9px] font-bold uppercase tracking-wider text-slate-400">{tech}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

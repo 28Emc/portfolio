@@ -1,0 +1,28 @@
+---
+import { metrics } from '../data/metrics';
+import { TrendingUp, Zap, Clock, Users, MousePointer2 } from '@lucide/astro';
+
+const icons = [TrendingUp, Clock, Zap, Users, MousePointer2];
+---
+
+<section id="impacto" class="section-padding bg-slate-100/50 dark:bg-slate-900/30">
+  <div class="text-center mb-16">
+    <h2 class="text-sm font-bold text-accent uppercase tracking-widest mb-3">Impacto Medible</h2>
+    <p class="text-3xl font-bold dark:text-white">Resultados que impulsan el negocio</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+    {metrics.map((metric, index) => {
+      const Icon = icons[index % icons.length];
+      return (
+        <div class="glass-card p-8 rounded-2xl flex flex-col items-center text-center group hover:border-accent transition-all duration-300">
+          <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 group-hover:text-accent group-hover:bg-accent/10 transition-colors mb-6">
+            <Icon size={28} />
+          </div>
+          <span class="text-4xl font-extrabold text-slate-900 dark:text-white mb-2">{metric.value}</span>
+          <p class="text-slate-500 dark:text-slate-400 text-sm font-medium leading-tight">{metric.label}</p>
+        </div>
+      );
+    })}
+  </div>
+</section>
