@@ -3,10 +3,7 @@
 @variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-primary-900: #0f172a;
-  --color-primary-800: #1e293b;
-  --color-primary-700: #334155;
-  --color-accent: #38bdf8; /* Cyan accent for a premium feel */
+  --color-accent: var(--current-accent);
 }
 
 @layer base {
@@ -15,13 +12,52 @@
     @apply antialiased;
   }
 
+  /* Temas disponibles (Copia y pega en :root para cambiar la identidad del sitio) */
+
+  /* 🔵 Facebook Blue (Actual)
+  --current-accent: #1877F2;
+  --bg-dark: #050a14;
+  --text-dark: #f0f7ff;
+  */
+
+  /* 🔴 Angular Red
+  --current-accent: #DD0031;
+  --bg-dark: #120104;
+  --text-dark: #fff5f5;
+  */
+
+  /* 🟢 Emerald Cyber
+  --current-accent: #10b981;
+  --bg-dark: #011210;
+  --text-dark: #ecfdf5;
+  */
+
+  /* 🟠 Nordic Sunset
+  --current-accent: #f97316;
+  --bg-dark: #121212;
+  --text-dark: #fff7ed;
+  */
+
+  /* 🟣 Vivid Purple
+  --current-accent: #A855F7;
+  --bg-dark: #0f0514;
+  --text-dark: #faf5ff;
+  */
+
+  :root {
+    --current-accent: #1877F2;
+    --bg-dark: #050a14;
+    --text-dark: #f0f7ff;
+  }
+
   body {
-    @apply bg-slate-50 text-slate-900 dark:bg-[#020617] dark:text-slate-100;
+    @apply bg-slate-50 text-slate-900 transition-colors duration-500;
     font-family: 'Inter', system-ui, sans-serif;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-bold tracking-tight;
+  .dark body {
+    background-color: var(--bg-dark);
+    color: var(--text-dark);
   }
 }
 
@@ -31,11 +67,7 @@
   }
 
   .glass-card {
-    @apply bg-white/80 backdrop-blur-sm border border-slate-200 dark:bg-slate-900/50 dark:border-slate-800;
-  }
-
-  .active-nav-link {
-    @apply text-primary-900 dark:text-white font-semibold;
+    @apply bg-white/80 backdrop-blur-sm border border-slate-200 dark:bg-white/5 dark:border-white/10;
   }
 }
 
@@ -45,13 +77,10 @@
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-slate-100 dark:bg-slate-900;
+  @apply bg-transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-slate-300 dark:bg-slate-700 rounded-full;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-slate-400 dark:bg-slate-600;
+  background-color: var(--current-accent);
+  @apply rounded-full opacity-50 px-1;
 }

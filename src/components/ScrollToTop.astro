@@ -1,0 +1,32 @@
+---
+import { ArrowUp } from '@lucide/astro';
+---
+
+<button
+  id="scroll-to-top"
+  class="fixed bottom-8 right-8 p-3 rounded-full bg-accent text-white shadow-lg shadow-accent/20 translate-y-20 opacity-0 transition-all duration-300 z-50 hover:-translate-y-1 hover:shadow-xl active:scale-90 cursor-pointer"
+  aria-label="Volver arriba"
+>
+  <ArrowUp size={24} />
+</button>
+
+<script>
+  const scrollBtn = document.getElementById('scroll-to-top');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 400) {
+      scrollBtn?.classList.remove('translate-y-20', 'opacity-0');
+      scrollBtn?.classList.add('translate-y-0', 'opacity-100');
+    } else {
+      scrollBtn?.classList.add('translate-y-20', 'opacity-0');
+      scrollBtn?.classList.remove('translate-y-0', 'opacity-100');
+    }
+  });
+
+  scrollBtn?.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+</script>
