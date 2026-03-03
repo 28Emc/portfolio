@@ -6,9 +6,9 @@ const featuredProjects = projects.filter(p => p.isFeatured);
 const otherProjects = projects.filter(p => !p.isFeatured);
 ---
 
-<section id="proyectos" class="section-padding bg-slate-100/30 dark:bg-slate-900/10">
+<section id="proyectos" class="section-padding bg-slate-100/30 dark:bg-slate-900/10" aria-labelledby="projects-title">
   <div class="text-center mb-16">
-    <h2 class="text-sm font-bold text-accent uppercase tracking-widest mb-3">Portafolio</h2>
+    <h2 id="projects-title" class="text-sm font-bold text-accent uppercase tracking-widest mb-3">Portafolio</h2>
     <p class="text-4xl font-bold dark:text-white">Proyectos Destacados</p>
   </div>
 
@@ -16,21 +16,21 @@ const otherProjects = projects.filter(p => !p.isFeatured);
     <!-- Featured Projects -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       {featuredProjects.map((project) => (
-        <div class="glass-card flex flex-col rounded-3xl overflow-hidden group hover:border-accent transition-all ring-2 ring-accent/10 border-accent/20 hover:cursor-default">
+        <article class="glass-card flex flex-col rounded-3xl overflow-hidden group hover:border-accent transition-all ring-2 ring-accent/10 border-accent/20 hover:cursor-default" aria-labelledby={`project-title-${project.title.replace(/\s+/g, '-').toLowerCase()}`}>
           <div class="p-8 flex-1">
             <div class="flex justify-between items-start mb-6">
               <div class="flex items-center gap-2">
-                <Star size={16} class="text-accent fill-accent" />
-                <h3 class="text-2xl font-bold dark:text-white group-hover:text-accent transition-colors">{project.title}</h3>
+                <Star size={16} class="text-accent fill-accent" aria-hidden="true" />
+                <h3 id={`project-title-${project.title.replace(/\s+/g, '-').toLowerCase()}`} class="text-2xl font-bold dark:text-white group-hover:text-accent transition-colors">{project.title}</h3>
               </div>
               {project.picImg && (
                 <button 
                   class="project-image-trigger p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-accent hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer"
                   data-image={project.picImg}
-                  data-title={project.title}
+                  aria-label={`Ver vista previa de ${project.title}`}
                   title="Ver Vista Previa"
                 >
-                  <Eye size={20} />
+                  <Eye size={20} aria-hidden="true" />
                 </button>
               )}
             </div>
@@ -41,21 +41,21 @@ const otherProjects = projects.filter(p => !p.isFeatured);
   
             <div class="space-y-4 mb-4">
               <div class="flex gap-4">
-                <div class="mt-1 text-red-400 shrink-0"><AlertCircle size={16} /></div>
+                <div class="mt-1 text-red-400 shrink-0" aria-hidden="true"><AlertCircle size={16} /></div>
                 <div>
                   <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Problema</p>
                   <p class="text-xs text-slate-700 dark:text-slate-300 font-medium">{project.problem}</p>
                 </div>
               </div>
               <div class="flex gap-4">
-                <div class="mt-1 text-blue-400 shrink-0"><Lightbulb size={16} /></div>
+                <div class="mt-1 text-blue-400 shrink-0" aria-hidden="true"><Lightbulb size={16} /></div>
                 <div>
                   <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Solución</p>
                   <p class="text-xs text-slate-700 dark:text-slate-300 font-medium">{project.solution}</p>
                 </div>
               </div>
               <div class="flex gap-4">
-                <div class="mt-1 text-green-400 shrink-0"><CheckCircle2 size={16} /></div>
+                <div class="mt-1 text-green-400 shrink-0" aria-hidden="true"><CheckCircle2 size={16} /></div>
                 <div>
                   <p class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Resultado</p>
                   <p class="text-xs text-slate-700 dark:text-slate-300 font-medium">{project.result}</p>
@@ -64,14 +64,14 @@ const otherProjects = projects.filter(p => !p.isFeatured);
             </div>
           </div>
           
-          <div class="p-6 bg-slate-50 dark:bg-slate-800/20 border-t border-slate-100 dark:border-slate-800 flex flex-wrap gap-2">
+          <div class="p-6 bg-slate-50 dark:bg-slate-800/20 border-t border-slate-100 dark:border-slate-800 flex flex-wrap gap-2" aria-label="Tecnologías">
             {project.technologies.map(tech => (
               <span class="text-[10px] font-semibold px-2 py-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-500 rounded-full">
                 {tech}
               </span>
             ))}
           </div>
-        </div>
+        </article>
       ))}
     </div>
 
@@ -80,15 +80,15 @@ const otherProjects = projects.filter(p => !p.isFeatured);
       <h3 class="text-xl font-bold dark:text-white mb-8 border-l-4 border-slate-300 pl-4">Otros proyectos relevantes</h3>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {otherProjects.map((project) => (
-          <div class="glass-card p-6 rounded-2xl group hover:border-slate-300 transition-all border-dashed border-2 hover:cursor-default">
+          <article class="glass-card p-6 rounded-2xl group hover:border-slate-300 transition-all border-dashed border-2 hover:cursor-default">
             <h4 class="text-lg font-bold dark:text-white mb-2 group-hover:text-accent transition-colors">{project.title}</h4>
             <p class="text-xs text-slate-500 dark:text-slate-400 mb-4 line-clamp-2">{project.description}</p>
-            <div class="flex flex-wrap gap-2">
+            <div class="flex flex-wrap gap-2" aria-label={`Tecnologías de ${project.title}`}>
               {project.technologies.map(tech => (
                 <span class="text-[9px] font-bold uppercase tracking-wider text-slate-400">{tech}</span>
               ))}
             </div>
-          </div>
+          </article>
         ))}
       </div>
     </div>

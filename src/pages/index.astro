@@ -16,23 +16,31 @@ import BentoModal from '../components/bento/BentoModal.astro';
 ---
 
 <MainLayout title="Edinson Medina Chinga | Full Stack Developer">
-	
+  <!-- Skip to main content for accessibility -->
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-[100] bg-accent text-white px-4 py-2 rounded-lg">
+    Saltar al contenido principal
+  </a>
+
   <!-- Standard Top Nav (Hidden in Bento Mode via CSS) -->
   <Navbar />
 	
 	<!-- Standard View: Linear SPA sections -->
 	<main id="standard-view" class="transition-opacity duration-500">
-		<Hero />
-		<ImpactMetrics />
-		<ExperienceTimeline />
-		<ProjectsSection />
-		<StackSection />
-		<EducationSection />
-    <ContactSection />
+    <div id="main-content">
+      <Hero />
+      <ImpactMetrics />
+      <ExperienceTimeline />
+      <ProjectsSection />
+      <StackSection />
+      <EducationSection />
+      <ContactSection />
+    </div>
 	</main>
 
   <!-- Bento View: Modern Dashboard (Hidden in standard via CSS) -->
-  <BentoGrid />
+  <div id="bento-view" role="region" aria-label="Vista Dashboard Bento">
+    <BentoGrid />
+  </div>
 
   <!-- Detail Modals shared across layouts -->
   <BentoModal />
@@ -48,8 +56,17 @@ import BentoModal from '../components/bento/BentoModal.astro';
     display: none !important;
   }
 
-  /* Bento is hidden by default in the component itself but reinforced here */
-  :global(body[data-layout="standard"]) #bento-container {
+  :global(body[data-layout="standard"]) #bento-view {
     display: none !important;
   }
 </style>
+
+<script>
+  // Listen for layout changes to update UI without reload
+  window.addEventListener('layout-change', (e: any) => {
+    const layout = e.detail;
+    if (layout === 'standard') {
+       window.location.reload(); // Still safest for complex layout shifts to reset scroll/observers
+    }
+  });
+</script>

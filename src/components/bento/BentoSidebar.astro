@@ -13,9 +13,9 @@ const menuItems = [
 ];
 ---
 
-<aside class="bento-sidebar">
+<aside class="bento-sidebar" role="navigation" aria-label="Navegación lateral Bento">
   <div class="logo-area flex justify-center py-8">
-     <div class="w-12 h-12 rounded-2xl bg-white shadow-lg flex items-center justify-center font-black text-[#1877f2]">D</div>
+     <div class="w-12 h-12 rounded-2xl bg-white shadow-lg flex items-center justify-center font-black text-[#1877f2]" aria-hidden="true">D</div>
   </div>
 
   <nav class="flex-1 px-4 flex flex-col gap-6 items-center py-4">
@@ -25,7 +25,7 @@ const menuItems = [
         data-trigger-modal={item.id}
         aria-label={item.label}
       >
-        <item.icon size={26} strokeWidth={2.5} class="text-white/70 group-hover:text-white transition-all transform group-hover:scale-110" />
+        <item.icon size={26} strokeWidth={2.5} aria-hidden="true" class="text-white/70 group-hover:text-white transition-all transform group-hover:scale-110" />
         <span class="absolute left-16 bg-white dark:bg-slate-800 text-xs font-bold px-3 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-all shadow-xl dark:shadow-none whitespace-nowrap pointer-events-none text-[#1877f2] dark:text-blue-400">
           {item.label}
         </span>
@@ -37,18 +37,18 @@ const menuItems = [
       <button 
         id="theme-toggle-bento" 
         class="sidebar-icon-btn"
-        aria-label="Toggle Theme"
+        aria-label="Cambiar tema"
       >
-        <Moon class="block dark:hidden" size={24} />
-        <Sun class="hidden dark:block" size={24} />
+        <Moon class="block dark:hidden" size={24} aria-hidden="true" />
+        <Sun class="hidden dark:block" size={24} aria-hidden="true" />
       </button>
       
       <button 
         id="layout-toggle-bento" 
         class="sidebar-icon-btn"
-        aria-label="Volver a Estándar"
+        aria-label="Volver a diseño Estándar"
       >
-        <LayoutPanelTop size={24} />
+        <LayoutPanelTop size={24} aria-hidden="true" />
       </button>
   </div>
 </aside>
@@ -57,7 +57,7 @@ const menuItems = [
   .bento-sidebar {
     height: calc(100vh - 4rem);
     width: 80px;
-    background: #1877f2; /* Restored Primary Blue */
+    background: #1877f2;
     border-radius: 2.25rem;
     display: flex;
     flex-direction: column;
@@ -89,7 +89,7 @@ const menuItems = [
   layoutBtn?.addEventListener('click', (e) => {
     e.preventDefault();
     setLayout('standard');
-    window.location.reload();
+    // We can avoid reload if the page listens to layout-change
   });
 
   themeBtn?.addEventListener('click', () => {

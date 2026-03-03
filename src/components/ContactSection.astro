@@ -2,10 +2,10 @@
 import { Mail, Linkedin, Github, Phone } from '@lucide/astro';
 ---
 
-<section id="contacto" class="section-padding">
+<section id="contacto" class="section-padding" aria-labelledby="contact-title">
   <div class="glass-card rounded-[32px] p-8 md:p-16 text-center max-w-5xl mx-auto border-accent/20">
-    <h2 class="text-sm font-bold text-accent uppercase tracking-widest mb-4">¿Hablamos?</h2>
-    <p class="text-4xl md:text-5xl font-bold dark:text-white mb-8">Impulsemos tu próximo <br class="hidden sm:block" /> producto juntos.</p>
+    <h2 id="contact-title" class="text-sm font-bold text-accent uppercase tracking-widest mb-4">¿Hablamos?</h2>
+    <p class="text-4xl md:text-5xl font-bold dark:text-white mb-8">Impulsemos tu próximo <br class="hidden sm:block" aria-hidden="true" /> producto juntos.</p>
     
     <p class="text-slate-600 dark:text-slate-400 text-lg mb-12 max-w-2xl mx-auto">
       Abierto a oportunidades como Desarrollador Full Stack para proyectos de alto impacto financiero y logístico.
@@ -15,33 +15,39 @@ import { Mail, Linkedin, Github, Phone } from '@lucide/astro';
       <a 
         href="mailto:edmech25@gmail.com" 
         class="px-8 py-4 bg-accent text-white rounded-xl font-bold flex items-center gap-3 hover:scale-105 transition-transform"
+        aria-label="Enviar correo electrónico a edmech25@gmail.com"
       >
-        <Mail size={20} /> edmech25@gmail.com
+        <Mail size={20} aria-hidden="true" /> edmech25@gmail.com
       </a>
       
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-4" role="list">
         <a 
           href="https://linkedin.com/in/edinson-medina-chinga" 
           target="_blank" 
+          rel="noopener noreferrer"
           class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-accent hover:border-accent transition-all"
-          aria-label="LinkedIn"
+          aria-label="Perfil de LinkedIn de Edinson Medina Chinga"
+          role="listitem"
         >
-          <Linkedin size={24} />
+          <Linkedin size={24} aria-hidden="true" />
         </a>
         <a 
           href="https://github.com/28Emc" 
           target="_blank" 
+          rel="noopener noreferrer"
           class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-accent hover:border-accent transition-all"
-          aria-label="GitHub"
+          aria-label="Perfil de GitHub de Edinson Medina Chinga"
+          role="listitem"
         >
-          <Github size={24} />
+          <Github size={24} aria-hidden="true" />
         </a>
         <a 
           href="tel:+51902564211" 
           class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:text-accent hover:border-accent transition-all"
-          aria-label="Teléfono"
+          aria-label="Llamar por teléfono al +51 902 564 211"
+          role="listitem"
         >
-          <Phone size={24} />
+          <Phone size={24} aria-hidden="true" />
         </a>
       </div>
     </div>

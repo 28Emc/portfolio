@@ -24,15 +24,25 @@ const {
     <title>{title}</title>
     <meta name="description" content={description} />
     
-    <!-- Open Graph -->
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:image" content="/og-image.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content="/og-image.png" />
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 
     <!-- Dark Mode Initializer -->
     <script is:inline>
@@ -64,25 +74,46 @@ const {
     <ScrollToTop />
     
     <script>
-      // Simple scroll spy for navbar
-      const sections = document.querySelectorAll('section[id]');
-      const navLinks = document.querySelectorAll('nav a');
+      /**
+       * Performance Optimized ScrollSpy using IntersectionObserver
+       */
+      const observerOptions = {
+        root: null,
+        rootMargin: '-20% 0px -70% 0px',
+        threshold: 0
+      };
 
-      window.addEventListener('scroll', () => {
-        let current = '';
-        sections.forEach(section => {
-          const sectionTop = (section as HTMLElement).offsetTop;
-          if (scrollY >= sectionTop - 100) {
-            current = section.getAttribute('id') || '';
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            updateActiveNavLink(id);
           }
         });
+      }, observerOptions);
 
-        navLinks.forEach(link => {
-          link.classList.remove('text-accent', 'font-bold');
-          if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('text-accent', 'font-bold');
+      function updateActiveNavLink(id: string | null) {
+        if (!id) return;
+        document.querySelectorAll('nav a, #mobile-menu a').forEach(link => {
+          const href = link.getAttribute('href');
+          if (href === `#${id}`) {
+            link.classList.add('active-nav-link', 'text-accent', 'font-bold');
+            link.setAttribute('aria-current', 'page');
+          } else {
+            link.classList.remove('active-nav-link', 'text-accent', 'font-bold');
+            link.removeAttribute('aria-current');
           }
         });
+      }
+
+      // Initial observe
+      document.querySelectorAll('section[id]').forEach(section => {
+        observer.observe(section);
+      });
+
+      // Cleanup on page transitions if needed
+      document.addEventListener('astro:after-swap', () => {
+        document.querySelectorAll('section[id]').forEach(section => observer.observe(section));
       });
     </script>
 	</body>

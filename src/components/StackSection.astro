@@ -5,9 +5,9 @@ import { Database, Layout, Server, Cloud, Boxes } from '@lucide/astro';
 const categoryIcons = [Layout, Server, Database, Cloud, Boxes];
 ---
 
-<section id="stack" class="section-padding">
+<section id="stack" class="section-padding" aria-labelledby="stack-title">
   <div class="text-center mb-16">
-    <h2 class="text-sm font-bold text-accent uppercase tracking-widest mb-3">Ecosistema</h2>
+    <h2 id="stack-title" class="text-sm font-bold text-accent uppercase tracking-widest mb-3">Ecosistema</h2>
     <p class="text-4xl font-bold dark:text-white">Stack Tecnológico</p>
   </div>
 
@@ -15,22 +15,22 @@ const categoryIcons = [Layout, Server, Database, Cloud, Boxes];
     {stack.map((group, index) => {
       const Icon = categoryIcons[index % categoryIcons.length];
       return (
-        <div class="p-8 rounded-3xl border border-slate-200 dark:border-slate-800 hover:border-accent transition-colors">
+        <article class="p-8 rounded-3xl border border-slate-200 dark:border-slate-800 hover:border-accent transition-colors">
           <div class="flex items-center gap-4 mb-8">
-            <div class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-white">
+            <div class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-white" aria-hidden="true">
               <Icon size={24} />
             </div>
             <h3 class="text-xl font-bold dark:text-white">{group.category}</h3>
           </div>
           
-          <div class="flex flex-wrap gap-3">
+          <ul class="flex flex-wrap gap-3" aria-label={`Tecnologías de ${group.category}`}>
             {group.skills.map(skill => (
-              <span class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 text-sm font-medium">
+              <li class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 text-sm font-medium">
                 {skill}
-              </span>
+              </li>
             ))}
-          </div>
-        </div>
+          </ul>
+        </article>
       );
     })}
   </div>
