@@ -55,7 +55,11 @@ const {
       window.localStorage.setItem('theme', theme);
     </script>
 	</head>
-	<body class="transition-colors duration-300">
+	<body class="transition-all duration-500 ease-in-out antialiased overflow-x-hidden">
+    <script is:inline>
+      const savedLayout = localStorage.getItem('app-layout') || 'standard';
+      document.body.setAttribute('data-layout', savedLayout);
+    </script>
 		<slot />
     <ScrollToTop />
     

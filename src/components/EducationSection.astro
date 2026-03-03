@@ -39,8 +39,8 @@ const certifications = [
           <GraduationCap class="text-accent" /> Educación
         </h3>
         {education.map(item => (
-          <div class="p-6 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm">
-            <h4 class="text-lg font-bold dark:text-white mb-1 leading-tight">{item.degree}</h4>
+          <div class="p-6 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm group hover:border-accent/40 transition-colors">
+            <h4 class="text-lg font-bold dark:text-white mb-1 leading-tight group-hover:text-accent transition-colors">{item.degree}</h4>
             <p class="text-slate-500 dark:text-slate-400 font-medium text-sm">{item.institution}</p>
             <p class="text-slate-400 dark:text-slate-500 text-xs mt-2 uppercase font-bold tracking-widest">{item.period}</p>
           </div>
@@ -51,8 +51,8 @@ const certifications = [
         </h3>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {languages.map(lang => (
-            <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 text-center">
-              <p class="font-bold dark:text-white text-sm">{lang.name}</p>
+            <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 text-center group hover:border-accent/40 transition-colors">
+              <p class="font-bold dark:text-white text-sm group-hover:text-accent">{lang.name}</p>
               <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">{lang.level}</p>
             </div>
           ))}
@@ -80,14 +80,14 @@ const certifications = [
           ))}
         </div>
 
-        <div class="p-8 rounded-3xl bg-slate-900 text-white dark:bg-accent dark:text-slate-950 mt-12 relative overflow-hidden group">
+        <!-- <div class="p-8 rounded-3xl bg-slate-900 text-white dark:bg-accent dark:text-slate-950 mt-12 relative overflow-hidden group">
           <div class="absolute -right-8 -bottom-8 opacity-20 group-hover:scale-110 transition-transform duration-500">
             <Award size={120} />
           </div>
           <p class="text-xs font-bold uppercase tracking-[0.2em] mb-4 opacity-70">Metodologías</p>
           <p class="text-xl font-bold leading-tight">Scrum, Kanban & Waterfall</p>
           <p class="text-sm mt-4 opacity-70">Experiencia entregando valor constante en entornos ágiles y tradicionales.</p>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

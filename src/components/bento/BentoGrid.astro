@@ -1,0 +1,220 @@
+---
+import BentoTile from './BentoTile.astro';
+import BentoSidebar from './BentoSidebar.astro';
+import { User, Briefcase, GraduationCap, Mail, Star, Boxes, Github, Linkedin, MessageSquare, Twitter, Globe, TrendingUp } from '@lucide/astro';
+
+// Import data
+import { metrics } from '../../data/metrics';
+import { experiences } from '../../data/experience';
+import { projects } from '../../data/projects';
+
+// Local education data to avoid missing file errors
+const education = [
+  {
+    degree: 'Desarrollo de Sistemas',
+    institution: 'Instituto SISE',
+    period: '2016 – 2019'
+  }
+];
+
+const featuredExperience = experiences[0];
+const featuredProject = projects.find(p => p.isFeatured) || projects[0];
+const topProjects = projects.filter(p => p !== featuredProject).slice(0, 3);
+---
+
+<div id="bento-container">
+  <div class="bento-layout-wrapper flex gap-4 lg:gap-8 max-w-[1550px] mx-auto p-4 lg:p-8 min-h-screen w-full">
+    
+    <!-- Sidebar -->
+    <BentoSidebar />
+
+    <!-- Main Dashboard Area -->
+    <main class="flex-1">
+      
+      <!-- Unified Bento Grid -->
+      <div class="grid grid-cols-12 auto-rows-[minmax(110px,_auto)] gap-4 lg:gap-6">
+        
+        <!-- Welcome Hero - Focus on Brand -->
+        <BentoTile id="hero" title="Sobre mí" className="col-span-12 lg:col-span-8 row-span-4 !bg-blue-50/50 dark:!bg-blue-900/10 border-blue-100/50 dark:border-blue-800/20 shadow-sm shadow-blue-500/5">
+          <div slot="preview" class="h-full flex flex-col justify-center gap-6 p-2">
+             <div class="flex items-center gap-8">
+                <div class="relative group">
+                   <div class="absolute -inset-1 bg-gradient-to-r from-[#1877f2] to-blue-400 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+                   <div class="relative w-24 h-24 lg:w-32 lg:h-32 rounded-full border-4 border-white dark:border-slate-800 bg-white overflow-hidden shadow-2xl">
+                      <img src="https://ui-avatars.com/api/?name=Edinson+Medina&background=1877f2&color=fff&size=256" alt="Edinson Medina Chinga" class="w-full h-full object-cover scale-110" />
+                   </div>
+                </div>
+                <div>
+                  <h1 class="text-4xl lg:text-7xl font-black text-[#1877f2] dark:text-blue-400 -mb-2 tracking-tighter">
+                    EMC
+                  </h1>
+                  <p class="font-black text-blue-900/40 dark:text-blue-200/40 uppercase tracking-[0.3em] text-[10px] lg:text-xs">Full Stack Craftsman</p>
+                  <div class="flex gap-2 mt-4 opacity-70">
+                     <span class="px-3 py-1 bg-white dark:bg-slate-800 rounded-full text-[10px] font-bold shadow-sm border border-blue-100 dark:border-slate-700">Open to Work</span>
+                     <span class="px-3 py-1 bg-[#1877f2] text-white rounded-full text-[10px] font-bold shadow-lg shadow-blue-500/20">Freelance</span>
+                  </div>
+                </div>
+             </div>
+             <p class="text-xl lg:text-3xl font-bold text-slate-800 dark:text-slate-200 leading-[1.2] max-w-2xl">
+                Transformo ideas complejas en experiencias digitales <span class="text-[#1877f2]">excepcionales</span> y escalables.
+             </p>
+          </div>
+        </BentoTile>
+
+        <!-- Dynamic Metrics Widget -->
+        <BentoTile id="impacto" title="Impacto" className="col-span-12 lg:col-span-4 row-span-4 !bg-white dark:!bg-slate-900 shadow-sm">
+          <div slot="preview" class="h-full flex flex-col justify-between py-2">
+             <div class="grid grid-cols-2 gap-4">
+                {metrics && metrics.length > 0 ? metrics.slice(0, 4).map(m => (
+                  <div class="flex flex-col gap-1 p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800/50">
+                    <span class="text-[9px] font-black uppercase text-slate-400 tracking-wider font-mono">{m.label}</span>
+                    <span class="text-2xl font-black text-[#1877f2]">{m.value}</span>
+                  </div>
+                )) : null}
+             </div>
+             <div class="mt-4 p-4 rounded-2xl bg-[#1877f2] text-white flex items-center justify-between shadow-lg shadow-blue-500/20 group-hover:scale-105 transition-transform">
+                <div>
+                   <p class="text-[10px] font-black uppercase opacity-60">Status</p>
+                   <p class="font-black text-xs">99% Proyectos Exitosos</p>
+                </div>
+                <div class="h-10 w-10 rounded-xl bg-white/20 flex items-center justify-center backdrop-blur-sm"><TrendingUp size={20} /></div>
+             </div>
+          </div>
+        </BentoTile>
+
+        <!-- Experience Spotlight -->
+        <BentoTile id="experiencia" title="Carrera" className="col-span-12 lg:col-span-4 row-span-5 !bg-[#eff6ff] dark:!bg-blue-900/10 border-blue-100 dark:border-blue-900/20 shadow-sm">
+          <div slot="preview" class="h-full flex flex-col justify-center gap-6">
+             {featuredExperience && (
+                <>
+                  <div class="space-y-4">
+                     <div class="w-16 h-16 rounded-[1.5rem] bg-[#1877f2] text-white flex items-center justify-center shadow-xl shadow-blue-500/30">
+                        <Briefcase size={32} />
+                     </div>
+                     <div>
+                        <h3 class="font-black text-2xl text-slate-900 dark:text-white leading-tight uppercase tracking-tight">
+                           {featuredExperience.role}
+                        </h3>
+                        <p class="text-[#1877f2]/70 font-black text-xs uppercase mt-1">
+                           {featuredExperience.company}
+                        </p>
+                     </div>
+                  </div>
+                  <div class="flex items-center gap-4 py-4 border-y border-blue-200/50 dark:border-blue-800/30">
+                     <p class="text-[10px] font-bold text-blue-900/40 dark:text-blue-300/40 uppercase tracking-widest leading-none">
+                       {featuredExperience.period}
+                     </p>
+                     <div class="h-1 flex-1 bg-white dark:bg-slate-800 rounded-full relative">
+                        <div class="absolute inset-y-0 left-0 w-3/4 bg-[#1877f2] rounded-full"></div>
+                     </div>
+                  </div>
+                  <p class="text-xs font-bold text-slate-500 dark:text-slate-400 line-clamp-2 italic">
+                    "{featuredExperience.achievements?.[0] || 'Experiencia profesional destacada'}"
+                  </p>
+                </>
+             )}
+          </div>
+        </BentoTile>
+
+        <!-- Expanded Project Showcase -->
+        <BentoTile id="proyectos" title="Laboratorio" className="col-span-12 lg:col-span-8 row-span-5 !bg-white dark:!bg-slate-900 border-slate-200 dark:border-slate-800 shadow-sm">
+          <div slot="preview" class="h-full flex flex-col lg:flex-row gap-6">
+             {featuredProject && (
+                <div class="w-full lg:w-3/5 h-full rounded-[2.5rem] bg-slate-900 dark:bg-blue-950/20 p-8 flex flex-col justify-between overflow-hidden group/card relative">
+                   <img src={featuredProject.picImg || "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=800"} alt={featuredProject.title} class="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:scale-110 transition-transform duration-1000" />
+                   <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent"></div>
+                   
+                   <header class="flex justify-between items-start relative z-10 w-full">
+                      <div class="w-12 h-12 rounded-2xl bg-[#1877f2] text-white flex items-center justify-center shadow-lg transform -rotate-12 group-hover:rotate-0 transition-transform"><Star size={24} fill="white" /></div>
+                      <div class="bg-white/10 backdrop-blur-lg border border-white/20 px-3 py-1 rounded-full text-[9px] font-black uppercase text-white tracking-widest italic">Proyecto Estrella</div>
+                   </header>
+                   
+                   <div class="relative z-10 space-y-2">
+                      <h4 class="font-black text-3xl text-white leading-none tracking-tighter uppercase italic">{featuredProject.title}</h4>
+                      <div class="flex gap-2">
+                         {featuredProject.technologies?.slice(0, 3).map(tech => (
+                           <span class="text-[9px] font-black text-blue-400 uppercase tracking-widest">{tech}</span>
+                         ))}
+                      </div>
+                   </div>
+                </div>
+             )}
+
+             <div class="flex-1 flex flex-col gap-4">
+                {topProjects && topProjects.map(p => (
+                   <div class="p-4 rounded-[1.75rem] border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30 flex items-center gap-4 hover:border-[#1877f2]/30 hover:bg-white transition-all cursor-pointer group/item">
+                      <div class="w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-900/50 flex items-center justify-center text-[#1877f2] group-hover/item:bg-[#1877f2] group-hover/item:text-white transition-colors duration-500">
+                         <Globe size={18} />
+                      </div>
+                      <div class="flex-1 min-w-0">
+                         <h5 class="font-black text-sm dark:text-white truncate uppercase tracking-tight">{p.title}</h5>
+                         <p class="text-[9px] text-[#1877f2] font-black opacity-60 uppercase">{p.technologies?.[0] || 'App'}</p>
+                      </div>
+                   </div>
+                ))}
+                <div class="flex-1 min-h-[4rem] bg-[#1877f2] p-4 text-white rounded-[1.75rem] flex items-center justify-center font-black text-xs uppercase tracking-widest shadow-lg shadow-blue-500/20 hover:scale-[1.02] transition-transform">
+                   Ver Todo
+                </div>
+             </div>
+          </div>
+        </BentoTile>
+
+        <!-- Tech Stack Radar -->
+        <BentoTile id="stack" title="Stack" className="col-span-12 lg:col-span-4 row-span-2 !bg-[#f1f5f9] dark:!bg-slate-800 shadow-inner">
+           <div slot="preview" class="h-full flex flex-wrap content-center gap-2">
+              {['React', 'Next.js', 'PostgreSQL', 'Tailwind', 'Astro', 'Node'].map(tag => (
+                <span class="px-4 py-1.5 bg-white dark:bg-slate-700 rounded-full shadow-sm border border-slate-200 dark:border-slate-600 text-[10px] font-black text-[#1877f2] uppercase tracking-wider">{tag}</span>
+              ))}
+           </div>
+        </BentoTile>
+
+        <!-- Education Spotlight -->
+        <BentoTile id="educacion" title="Formación" className="col-span-12 lg:col-span-3 row-span-2 !bg-purple-50 dark:!bg-purple-950/10 border-purple-100 dark:border-purple-900/20">
+          <div slot="preview" class="h-full flex items-center gap-4">
+             <div class="w-12 h-12 rounded-2xl bg-[#1877f2] shadow-lg flex items-center justify-center text-white"><GraduationCap size={24} /></div>
+             <div>
+                <p class="font-black text-xs text-purple-900 dark:text-purple-100 leading-tight">Desarrollo de Sistemas</p>
+                <p class="text-[9px] font-black uppercase text-purple-600 dark:text-purple-400 opacity-60 italic">SISE</p>
+             </div>
+          </div>
+        </BentoTile>
+
+        <!-- Footer / Contact Hub -->
+        <BentoTile id="contacto" title="Social Hub" className="col-span-12 lg:col-span-5 row-span-2 !bg-[#1877f2] !text-white border-blue-400/30">
+          <div slot="preview" class="h-full flex items-center justify-between px-4">
+             <div class="flex gap-6 items-center">
+                <a href="#" class="hover:scale-125 transition-transform duration-500"><Linkedin size={22} fill="white" /></a>
+                <a href="#" class="hover:scale-125 transition-transform duration-500"><Github size={22} /></a>
+                <a href="#" class="hover:scale-125 transition-transform duration-500"><Twitter size={22} fill="white" /></a>
+                <div class="w-px h-8 bg-white/20 mx-2"></div>
+                <div class="flex flex-col">
+                   <p class="text-[8px] font-black uppercase opacity-40">Let's talk</p>
+                   <p class="text-xs font-black uppercase tracking-widest underline decoration-wavy underline-offset-4">Shoot Me</p>
+                </div>
+             </div>
+             <p class="text-[9px] font-black uppercase opacity-25 font-mono">EMC © 2024</p>
+          </div>
+        </BentoTile>
+
+      </div>
+    </main>
+
+  </div>
+</div>
+
+<style>
+  #bento-container {
+    background-color: #f3f6ff;
+    min-height: 100vh;
+    transition: all 0.5s ease;
+    display: none;
+  }
+  
+  :global(.dark) #bento-container {
+    background-color: #020617;
+  }
+
+  :global(body[data-layout="bento"]) #bento-container { 
+    display: block !important; 
+  }
+</style>

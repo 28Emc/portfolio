@@ -5,6 +5,7 @@ export interface Project {
     solution: string;
     result: string;
     technologies: string[];
+    picImg?: string;
     isFeatured?: boolean;
 }
 
@@ -16,6 +17,7 @@ export const projects: Project[] = [
         solution: "Consolidación en una plataforma moderna con arquitectura de microservicios y despliegue modular.",
         result: "Reducción del 60% en la carga operativa y técnica, garantizando escalabilidad total.",
         technologies: ["Angular", "TypeScript", "Express", "NestJS", "NodeJS", "Laravel", "GCP", "Docker"],
+        picImg: "/Pymera_AIO.png",
         isFeatured: true
     },
     {
@@ -25,6 +27,7 @@ export const projects: Project[] = [
         solution: "Desarrollo de frontend en Angular con integración segura a API REST en Spring Boot y flujo CI/CD.",
         result: "Reducción del 40% en tiempos operativos y flujo estable de pruebas funcionales (Staging/Prod).",
         technologies: ["Angular", "TypeScript", "Spring Boot", "GCP"],
+        picImg: "/Kapital_Factoring.png",
         isFeatured: true
     },
     {
@@ -34,6 +37,7 @@ export const projects: Project[] = [
         solution: "Frontend en Angular integrado con .NET, incluyendo módulos de adendas y flujos jurídicos.",
         result: "Elevada cobertura funcional y soporte para inversionistas naturales y jurídicos en producción.",
         technologies: ["Angular", "TypeScript", ".NET", "SQL Server"],
+        picImg: "/Vesper.png",
         isFeatured: true
     },
     {

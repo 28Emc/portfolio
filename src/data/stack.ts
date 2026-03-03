@@ -6,11 +6,11 @@ export interface StackCategory {
 export const stack: StackCategory[] = [
     {
         category: "Frontend",
-        skills: ["Angular 12+", "Astro", "TypeScript", "JavaScript", "HTML5", "CSS3/SCSS"]
+        skills: ["Angular", "Astro", "JavaScript", "TypeScript", "HTML5", "CSS3/SCSS"]
     },
     {
         category: "Backend",
-        skills: ["Java 17+ (Spring Boot)", "NodeJS (NestJS, Express)", "PHP (Laravel, Lumen)"]
+        skills: ["Java (Spring Boot, Security, Data, Cloud)", "JavaScript/TypeScript (NestJS, Express)", "PHP (Laravel, Lumen)"]
     },
     {
         category: "Bases de Datos",
@@ -18,10 +18,10 @@ export const stack: StackCategory[] = [
     },
     {
         category: "Cloud & DevOps",
-        skills: ["GCP (Cloud Run, VMs, Buckets)", "Docker", "CI/CD", "CPanel"]
+        skills: ["GCP (App Engine, Cloud Run, Compute Engine, Cloud Storage, Cloud SQL, Scheduler)", "Docker", "CPanel"]
     },
     {
         category: "Arquitectura & Herramientas",
-        skills: ["Microservicios", "APIs REST", "WebSockets", "Testing (Jasmine, Jest, Karma)", "Git/GitHub"]
+        skills: ["Microservicios", "APIs REST", "WebSockets", "Testing (Jasmine, Jest, Karma)", "Git/GitHub", "Postman"]
     }
 ];

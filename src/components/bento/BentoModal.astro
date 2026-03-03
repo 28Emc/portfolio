@@ -1,0 +1,82 @@
+---
+import { X } from '@lucide/astro';
+---
+
+<div id="bento-modal-overlay" class="fixed inset-0 z-[200] bg-slate-900/60 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-500 overflow-y-auto pt-20">
+    <div class="max-w-5xl mx-auto px-6 pb-20 relative">
+        <button id="close-bento-modal" class="fixed top-8 right-8 p-4 rounded-full bg-white dark:bg-slate-800 shadow-2xl z-[210] hover:scale-110 active:scale-90 transition-all">
+            <X size={24} />
+        </button>
+        
+        <div id="bento-modal-content" class="bg-white dark:bg-slate-900 rounded-[3rem] shadow-2xl p-12 lg:p-20 translate-y-10 transition-all duration-500">
+            <!-- Content will be injected/moved here -->
+        </div>
+    </div>
+</div>
+
+<style>
+    #bento-modal-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+    
+    #bento-modal-overlay.active #bento-modal-content {
+        transform: translateY(0);
+    }
+</style>
+
+<script>
+    const overlay = document.getElementById('bento-modal-overlay');
+    const content = document.getElementById('bento-modal-content');
+    const closeBtn = document.getElementById('close-bento-modal');
+    const tiles = document.querySelectorAll('.bento-tile');
+
+    // For Sidebar icons too
+    const sidebarIcons = document.querySelectorAll('[data-trigger-modal]');
+
+    function openModal(id: string) {
+        if (!overlay || !content) return;
+        
+        // Find the target component in the standard layout
+        const source = document.getElementById(id); // Components like #hero, #impacto, etc.
+        if (!source) return;
+
+        // Clone or move? Moving is easier for styles, but let's clone to keep original safe
+        const clone = source.cloneNode(true) as HTMLElement;
+        clone.classList.remove('section-padding'); 
+        clone.id = `modal-clone-${id}`;
+        
+        // Inject
+        content.innerHTML = '';
+        content.appendChild(clone);
+        
+        // Active
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        if (!overlay) return;
+        overlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    tiles.forEach(tile => {
+        tile.addEventListener('click', () => {
+            const id = tile.getAttribute('data-bento-id');
+            if (id) openModal(id);
+        });
+    });
+
+    sidebarIcons.forEach(btn => {
+        btn.addEventListener('click', () => {
+             const id = btn.getAttribute('data-trigger-modal');
+             if (id) openModal(id);
+        });
+    })
+
+    closeBtn?.addEventListener('click', closeModal);
+    overlay?.addEventListener('click', (e) => {
+        if (e.target === overlay) closeModal();
+    });
+</script>

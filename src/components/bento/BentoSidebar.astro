@@ -1,0 +1,105 @@
+---
+import { Home, LayoutPanelTop, Moon, Sun, Briefcase, GraduationCap, Mail, Star, Boxes, TrendingUp } from '@lucide/astro';
+import { layouts } from '../../utils/layoutManager';
+
+const menuItems = [
+  { icon: Home, label: 'Inicio', id: 'hero' },
+  { icon: TrendingUp, label: 'Impacto', id: 'impacto' },
+  { icon: Briefcase, label: 'Experiencia', id: 'experiencia' },
+  { icon: Star, label: 'Proyectos', id: 'proyectos' },
+  { icon: Boxes, label: 'Stack', id: 'stack' },
+  { icon: GraduationCap, label: 'Educación', id: 'educacion' },
+  { icon: Mail, label: 'Contacto', id: 'contacto' }
+];
+---
+
+<aside class="bento-sidebar">
+  <div class="logo-area flex justify-center py-8">
+     <div class="w-12 h-12 rounded-2xl bg-white shadow-lg flex items-center justify-center font-black text-[#1877f2]">D</div>
+  </div>
+
+  <nav class="flex-1 px-4 flex flex-col gap-6 items-center py-4">
+    {menuItems.map(item => (
+      <button 
+        class="sidebar-icon-btn group relative" 
+        data-trigger-modal={item.id}
+        aria-label={item.label}
+      >
+        <item.icon size={26} strokeWidth={2.5} class="text-white/70 group-hover:text-white transition-all transform group-hover:scale-110" />
+        <span class="absolute left-16 bg-white dark:bg-slate-800 text-xs font-bold px-3 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-all shadow-xl dark:shadow-none whitespace-nowrap pointer-events-none text-[#1877f2] dark:text-blue-400">
+          {item.label}
+        </span>
+      </button>
+    ))}
+  </nav>
+
+  <div class="flex flex-col gap-6 items-center pb-8 p-4 border-t border-white/10">
+      <button 
+        id="theme-toggle-bento" 
+        class="sidebar-icon-btn"
+        aria-label="Toggle Theme"
+      >
+        <Moon class="block dark:hidden" size={24} />
+        <Sun class="hidden dark:block" size={24} />
+      </button>
+      
+      <button 
+        id="layout-toggle-bento" 
+        class="sidebar-icon-btn"
+        aria-label="Volver a Estándar"
+      >
+        <LayoutPanelTop size={24} />
+      </button>
+  </div>
+</aside>
+
+<style>
+  .bento-sidebar {
+    height: calc(100vh - 4rem);
+    width: 80px;
+    background: #1877f2; /* Restored Primary Blue */
+    border-radius: 2.25rem;
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 2rem;
+    box-shadow: 0 20px 40px rgba(24, 119, 242, 0.3);
+    z-index: 100;
+  }
+
+  .sidebar-icon-btn {
+    padding: 0.65rem;
+    border-radius: 1.15rem;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    color: white;
+  }
+
+  .sidebar-icon-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+</style>
+
+<script>
+  import { setLayout } from '../../utils/layoutManager';
+
+  const layoutBtn = document.getElementById('layout-toggle-bento');
+  const themeBtn = document.getElementById('theme-toggle-bento');
+
+  layoutBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
+    setLayout('standard');
+    window.location.reload();
+  });
+
+  themeBtn?.addEventListener('click', () => {
+    const isDark = document.documentElement.classList.contains('dark');
+    if (isDark) {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    } else {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    }
+  });
+</script>

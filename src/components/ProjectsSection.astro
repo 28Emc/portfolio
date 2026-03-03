@@ -1,6 +1,6 @@
 ---
 import { projects } from '../data/projects';
-import { ExternalLink, CheckCircle2, AlertCircle, Lightbulb, Star } from '@lucide/astro';
+import { ExternalLink, CheckCircle2, AlertCircle, Lightbulb, Star, Eye, X } from '@lucide/astro';
 
 const featuredProjects = projects.filter(p => p.isFeatured);
 const otherProjects = projects.filter(p => !p.isFeatured);
@@ -16,13 +16,23 @@ const otherProjects = projects.filter(p => !p.isFeatured);
     <!-- Featured Projects -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       {featuredProjects.map((project) => (
-        <div class="glass-card flex flex-col rounded-3xl overflow-hidden group hover:border-accent transition-all ring-2 ring-accent/10 border-accent/20">
+        <div class="glass-card flex flex-col rounded-3xl overflow-hidden group hover:border-accent transition-all ring-2 ring-accent/10 border-accent/20 hover:cursor-default">
           <div class="p-8 flex-1">
             <div class="flex justify-between items-start mb-6">
               <div class="flex items-center gap-2">
                 <Star size={16} class="text-accent fill-accent" />
                 <h3 class="text-2xl font-bold dark:text-white group-hover:text-accent transition-colors">{project.title}</h3>
               </div>
+              {project.picImg && (
+                <button 
+                  class="project-image-trigger p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-accent hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer"
+                  data-image={project.picImg}
+                  data-title={project.title}
+                  title="Ver Vista Previa"
+                >
+                  <Eye size={20} />
+                </button>
+              )}
             </div>
             
             <p class="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed text-sm">
@@ -55,7 +65,7 @@ const otherProjects = projects.filter(p => !p.isFeatured);
           </div>
           
           <div class="p-6 bg-slate-50 dark:bg-slate-800/20 border-t border-slate-100 dark:border-slate-800 flex flex-wrap gap-2">
-            {project.technologies.slice(0, 4).map(tech => (
+            {project.technologies.map(tech => (
               <span class="text-[10px] font-semibold px-2 py-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-500 rounded-full">
                 {tech}
               </span>
@@ -70,11 +80,11 @@ const otherProjects = projects.filter(p => !p.isFeatured);
       <h3 class="text-xl font-bold dark:text-white mb-8 border-l-4 border-slate-300 pl-4">Otros proyectos relevantes</h3>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {otherProjects.map((project) => (
-          <div class="glass-card p-6 rounded-2xl group hover:border-slate-300 transition-all border-dashed border-2">
+          <div class="glass-card p-6 rounded-2xl group hover:border-slate-300 transition-all border-dashed border-2 hover:cursor-default">
             <h4 class="text-lg font-bold dark:text-white mb-2 group-hover:text-accent transition-colors">{project.title}</h4>
             <p class="text-xs text-slate-500 dark:text-slate-400 mb-4 line-clamp-2">{project.description}</p>
-            <div class="flex flex-wrap gap-1">
-              {project.technologies.slice(0, 3).map(tech => (
+            <div class="flex flex-wrap gap-2">
+              {project.technologies.map(tech => (
                 <span class="text-[9px] font-bold uppercase tracking-wider text-slate-400">{tech}</span>
               ))}
             </div>
@@ -84,3 +94,68 @@ const otherProjects = projects.filter(p => !p.isFeatured);
     </div>
   </div>
 </section>
+
+<!-- Project Image Modal -->
+<div id="project-modal" class="fixed inset-0 z-[300] bg-slate-900/80 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-4">
+    <div class="relative max-w-5xl w-full bg-white dark:bg-slate-900 rounded-[2rem] overflow-hidden shadow-2xl translate-y-8 transition-transform duration-300">
+      <button id="close-project-modal" class="absolute top-4 right-4 p-3 rounded-full bg-black/20 hover:bg-black/40 text-white backdrop-blur-md z-10 transition-colors cursor-pointer">
+        <X size={24} />
+      </button>
+      
+      <div class="flex items-center justify-center">
+        <img id="modal-project-img" src="" alt="Vista previa del proyecto" class="max-w-full max-h-[90vh] object-contain rounded-[1.5rem]" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #project-modal.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  #project-modal.active > div {
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  const modal = document.getElementById('project-modal');
+  const modalImg = document.getElementById('modal-project-img') as HTMLImageElement;
+  const closeBtn = document.getElementById('close-project-modal');
+  const triggers = document.querySelectorAll('.project-image-trigger');
+
+  function openModal(img: string) {
+    if (!modal || !modalImg) return;
+    
+    modalImg.src = img;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    if (!modal) return;
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('click', (e) => {
+    const trigger = (e.target as HTMLElement).closest('.project-image-trigger');
+    if (trigger) {
+      e.preventDefault();
+      e.stopPropagation();
+      const img = trigger.getAttribute('data-image');
+      if (img) openModal(img);
+    }
+  });
+
+  closeBtn?.addEventListener('click', closeModal);
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
+  });
+</script>

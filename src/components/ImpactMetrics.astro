@@ -11,7 +11,7 @@ const icons = [TrendingUp, Clock, Zap, Users, MousePointer2];
     <p class="text-3xl font-bold dark:text-white">Resultados que impulsan el negocio</p>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 hover:cursor-default">
     {metrics.map((metric, index) => {
       const Icon = icons[index % icons.length];
       return (

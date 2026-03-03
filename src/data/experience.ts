@@ -25,20 +25,19 @@ export const experiences: Experience[] = [
         period: "Agosto 2020 - Agosto 2021",
         description: [
             "Rediseño de módulos clave de intranet/extranet financiera, mejorando un 30% la usabilidad.",
-            "Integración de Angular y Spring Boot para estabilizar procesos de factoring electrónico.",
+            "Integración de Angular y Laravel y/o Spring Boot para estabilizar procesos de factoring electrónico.",
             "Documentación de flujos funcionales y colaboración en despliegues bajo ciclos Dev-Test-Prod."
         ],
-        technologies: ["Angular", "TypeScript", "Spring Boot", "GCP"]
+        technologies: ["Angular", "TypeScript", "Laravel", "Spring Boot", "GCP"]
     },
     {
         company: "ITBCP",
         role: "Practicante Programador",
         period: "Septiembre 2019 - Diciembre 2019",
         description: [
-            "Apoyo en el levantamiento de requerimientos y prototipos para automatización de procesos.",
-            "Implementación y documentación de soluciones tecnológicas internas.",
-            "Mejora de la trazabilidad y soporte técnico mediante herramientas de gestión."
+            "Apoyo en el levantamiento y análisis de requerimientos.",
+            "Implementación y documentación de soluciones tecnológicas internas."
         ],
-        technologies: ["HTML/CSS", "JavaScript"]
+        technologies: ["HTML/CSS", "JavaScript", "SQL Server", "ASP.NET"]
     }
 ];

@@ -9,12 +9,19 @@ import StackSection from '../components/StackSection.astro';
 import EducationSection from '../components/EducationSection.astro';
 import ContactSection from '../components/ContactSection.astro';
 import Footer from '../components/Footer.astro';
+
+// Bento Components
+import BentoGrid from '../components/bento/BentoGrid.astro';
+import BentoModal from '../components/bento/BentoModal.astro';
 ---
 
 <MainLayout title="Edinson Medina Chinga | Full Stack Developer">
-	<Navbar />
 	
-	<main>
+  <!-- Standard Top Nav (Hidden in Bento Mode via CSS) -->
+  <Navbar />
+	
+	<!-- Standard View: Linear SPA sections -->
+	<main id="standard-view" class="transition-opacity duration-500">
 		<Hero />
 		<ImpactMetrics />
 		<ExperienceTimeline />
@@ -24,5 +31,25 @@ import Footer from '../components/Footer.astro';
     <ContactSection />
 	</main>
 
-	<Footer />
+  <!-- Bento View: Modern Dashboard (Hidden in standard via CSS) -->
+  <BentoGrid />
+
+  <!-- Detail Modals shared across layouts -->
+  <BentoModal />
+
+	<Footer class="standard-footer" />
 </MainLayout>
+
+<style>
+  /* Base Layout Toggle logic */
+  :global(body[data-layout="bento"]) #standard-view,
+  :global(body[data-layout="bento"]) nav,
+  :global(body[data-layout="bento"]) footer {
+    display: none !important;
+  }
+
+  /* Bento is hidden by default in the component itself but reinforced here */
+  :global(body[data-layout="standard"]) #bento-container {
+    display: none !important;
+  }
+</style>
