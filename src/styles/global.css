@@ -14,10 +14,19 @@
   :root {
     --current-accent: #1877f2;
     /* Facebook Blue */
-    --accent-dark: #0d6efd;
+    --accent-dark: #0866ff;
     --accent-light: #e7f3ff;
-    --bg-dark: #0f172a;
+
+    /* Dark Mode Palette - Refined */
+    --bg-dark: #020617;
+    /* Slate 950 - Deeper/Modern */
+    --surface-dark: #0f172a;
+    /* Slate 900 - Surface elevation */
     --text-dark: #f8fafc;
+    /* Slate 50 - Primary text */
+    --text-muted-dark: #94a3b8;
+    /* Slate 400 - Secondary text */
+    --border-dark: rgba(255, 255, 255, 0.08);
   }
 
   body {

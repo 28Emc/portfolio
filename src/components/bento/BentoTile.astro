@@ -49,9 +49,9 @@ const { id, title, className = "", gridArea = "" } = Astro.props;
   }
   
   :global(.dark) .bento-tile {
-    background: #1e293b;
-    border-color: rgba(255, 255, 255, 0.03);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    background: var(--surface-dark);
+    border-color: var(--border-dark);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
   }
 
   .bento-tile:hover {
