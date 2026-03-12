@@ -18,10 +18,20 @@ He construido este portafolio utilizando las herramientas más modernas del ecos
 
 ## ✨ Lo que hace especial a este sitio
 
-* **Experiencia Fluida**: Una navegación intuitiva diseñada para que encuentres lo que buscas sin distracciones.
-* **Modo Oscuro Premium**: Pensado en la comodidad visual, con una paleta de colores equilibrada y moderna.
-* **Diseño para Todos**: Implementado con altos estándares de accesibilidad, asegurando que el contenido sea legible y navegable para cualquier persona.
-* **Velocidad Real**: Optimizado para cargar casi instantáneamente, porque el tiempo es el recurso más valioso.
+*   **Experiencia Fluida**: Una navegación intuitiva diseñada para que encuentres lo que buscas sin distracciones.
+*   **Modo Oscuro Premium**: Pensado en la comodidad visual, con una paleta de colores equilibrada y moderna.
+*   **Diseño para Todos**: Implementado con altos estándares de accesibilidad, asegurando que el contenido sea legible y navegable para cualquier persona.
+*   **Velocidad Real**: Optimizado para cargar casi instantáneamente, porque el tiempo es el recurso más valioso.
+
+---
+
+## ✅ Buenas Prácticas e Ingeniería
+
+Para asegurar la escalabilidad y mantenibilidad, el código sigue principios de desarrollo profesional:
+*   **Accesibilidad (A11y)**: Uso de HTML semántico, etiquetas ARIA y roles descriptivos para una experiencia inclusiva.
+*   **Tipado Estricto**: Todo el flujo de datos está validado mediante interfaces de TypeScript.
+*   **Arquitectura Modular**: Componentes desacoplados y reutilizables bajo una estructura de diseño sólida.
+*   **Datos Centralizados**: Separación total de la lógica visual y el contenido, facilitando actualizaciones rápidas sin tocar el código.
 
 ---
 
@@ -29,19 +39,20 @@ He construido este portafolio utilizando las herramientas más modernas del ecos
 
 | Área | Mi elección |
 | :--- | :--- |
-| **Estructura** | Astro 5 |
+| **Estructura** | Astro 6 (Latest) |
 | **Estilos** | Tailwind CSS 4 |
 | **Lógica** | TypeScript |
 | **Iconografía** | Lucide |
 
 ---
 
-## 📂 Organización
+## 📂 Organización del Proyecto
 
-Para quienes deseen explorar las entrañas del proyecto:
-* `src/data/`: Aquí reside toda la información profesional para facilitar actualizaciones rápidas.
-* `src/components/`: Piezas modulares que dan vida a la interfaz.
-* `src/layouts/`: La base técnica y configuración SEO.
+*   `src/data/`: Fuente de verdad para toda la información profesional.
+*   `src/types/`: Definiciones de interfaces y tipos globales.
+*   `src/components/ui/`: Componentes base (Botones, Cards, Títulos).
+*   `src/components/projects/`: Lógica específica para el portafolio y modales.
+*   `src/layouts/`: Estructura técnica y optimización SEO.
 
 ---
 
@@ -65,8 +76,8 @@ El sitio se actualiza automáticamente a través de **GitHub Actions**, lo que m
 
 Siempre estoy abierto a charlar sobre nuevas oportunidades o retos tecnológicos.
 
-* **Correo:** [edmech25@gmail.com](mailto:edmech25@gmail.com)
-* **LinkedIn:** [/in/edinson-medina-chinga](https://linkedin.com/in/edinson-medina-chinga)
-* **GitHub:** [@28Emc](https://github.com/28Emc)
+*   **Correo:** [edmech25@gmail.com](mailto:edmech25@gmail.com)
+*   **LinkedIn:** [/in/edinson-medina-chinga](https://linkedin.com/in/edinson-medina-chinga)
+*   **GitHub:** [@28Emc](https://github.com/28Emc)
 
 Hecho con dedicación por **Edinson Medina Chinga**
