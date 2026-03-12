@@ -9,64 +9,24 @@ import StackSection from '../components/StackSection.astro';
 import EducationSection from '../components/EducationSection.astro';
 import ContactSection from '../components/ContactSection.astro';
 import Footer from '../components/Footer.astro';
-
-// Bento Components
-import BentoGrid from '../components/bento/BentoGrid.astro';
-import BentoModal from '../components/bento/BentoModal.astro';
 ---
 
 <MainLayout title="Edinson Medina Chinga | Full Stack Developer">
-  <!-- Skip to main content for accessibility -->
   <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-[100] bg-accent text-white px-4 py-2 rounded-lg">
     Saltar al contenido principal
   </a>
 
-  <!-- Standard Top Nav (Hidden in Bento Mode via CSS) -->
   <Navbar />
-	
-	<!-- Standard View: Linear SPA sections -->
-	<main id="standard-view" class="transition-opacity duration-500">
-    <div id="main-content">
-      <Hero />
-      <ImpactMetrics />
-      <ExperienceTimeline />
-      <ProjectsSection />
-      <StackSection />
-      <EducationSection />
-      <ContactSection />
-    </div>
-	</main>
 
-  <!-- Bento View: Modern Dashboard (Hidden in standard via CSS) -->
-  <div id="bento-view" role="region" aria-label="Vista Dashboard Bento">
-    <BentoGrid />
-  </div>
+  <main id="main-content">
+    <Hero />
+    <ImpactMetrics />
+    <ExperienceTimeline />
+    <ProjectsSection />
+    <StackSection />
+    <EducationSection />
+    <ContactSection />
+  </main>
 
-  <!-- Detail Modals shared across layouts -->
-  <BentoModal />
-
-	<Footer class="standard-footer" />
+  <Footer />
 </MainLayout>
-
-<style>
-  /* Base Layout Toggle logic */
-  :global(body[data-layout="bento"]) #standard-view,
-  :global(body[data-layout="bento"]) nav,
-  :global(body[data-layout="bento"]) footer {
-    display: none !important;
-  }
-
-  :global(body[data-layout="standard"]) #bento-view {
-    display: none !important;
-  }
-</style>
-
-<script>
-  // Listen for layout changes to update UI without reload
-  window.addEventListener('layout-change', (e: any) => {
-    const layout = e.detail;
-    if (layout === 'standard') {
-       window.location.reload(); // Still safest for complex layout shifts to reset scroll/observers
-    }
-  });
-</script>

@@ -1,6 +1,5 @@
 ---
-import { Menu, X, Moon, Sun, LayoutPanelTop } from '@lucide/astro';
-import { layouts } from '../utils/layoutManager';
+import { Menu, Moon, Sun } from '@lucide/astro';
 
 const navItems = [
   { label: 'Inicio', href: '#hero' },
@@ -13,80 +12,55 @@ const navItems = [
 ];
 ---
 
-<nav class="fixed top-0 left-0 w-full z-50 bg-white/80 dark:bg-[var(--bg-dark)]/80 backdrop-blur-md border-b border-slate-200 dark:border-[var(--border-dark)] transition-all duration-300" role="navigation" aria-label="Navegación principal">
+<nav
+  class="fixed top-0 left-0 w-full z-50 bg-white/80 dark:bg-[var(--bg-dark)]/80 backdrop-blur-md border-b border-slate-200 dark:border-[var(--border-dark)] transition-all duration-300"
+  role="navigation"
+  aria-label="Navegación principal"
+>
   <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
     <a href="#hero" class="text-xl font-bold bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400 bg-clip-text text-transparent">
       EMC
     </a>
 
-    <!-- Desktop Nav -->
     <div class="hidden md:flex items-center gap-8">
       {navItems.map(item => (
-        <a 
-          href={item.href} 
+        <a
+          href={item.href}
           class="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
         >
           {item.label}
         </a>
       ))}
-      
-      <!-- Layout Selector -->      
-      <!--
-      <div class="hidden md:flex relative group border-l border-slate-200 dark:border-slate-800 pl-6 h-6 items-center">
-        <button 
-          class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400 hover:text-accent transition-colors cursor-pointer"
-          aria-haspopup="true"
-          aria-expanded="false"
-          aria-label="Cambiar diseño"
-        >
-          Layout <LayoutPanelTop size={14} aria-hidden="true" />
-        </button>
-        <div class="absolute right-0 top-full pt-4 hidden group-hover:block animate-in fade-in slide-in-from-top-2 duration-200">
-          <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-2xl p-2 w-44 flex flex-col gap-1 ring-1 ring-black/5">
-            {layouts.map(l => (
-              <button 
-                data-layout-option={l.id}
-                class="text-left px-4 py-2.5 text-[11px] font-bold uppercase tracking-wider rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-all cursor-pointer flex items-center justify-between group/item"
-              >
-                {l.label}
-                <div class="w-1.5 h-1.5 rounded-full bg-accent opacity-0 group-[.active]:opacity-100 transition-opacity"></div>
-              </button>
-            ))}
-          </div>
-        </div>        
-      </div>  -->
 
-      <button 
-        id="theme-toggle" 
+      <button
+        id="theme-toggle"
         class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
         aria-label="Alternar modo oscuro"
       >
-        <div class="block dark:hidden"><Moon size={20} /></div>
-        <div class="hidden dark:block"><Sun size={20} /></div>
+        <div class="block dark:hidden" aria-hidden="true"><Moon size={20} /></div>
+        <div class="hidden dark:block" aria-hidden="true"><Sun size={20} /></div>
       </button>
     </div>
 
-    <!-- Mobile Menu Button -->
     <div class="flex items-center gap-2 md:hidden">
-      <button 
-        id="theme-toggle-mobile" 
+      <button
+        id="theme-toggle-mobile"
         class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
         aria-label="Alternar modo oscuro"
       >
-        <div class="block dark:hidden"><Moon size={20} /></div>
-        <div class="hidden dark:block"><Sun size={20} /></div>
+        <div class="block dark:hidden" aria-hidden="true"><Moon size={20} /></div>
+        <div class="hidden dark:block" aria-hidden="true"><Sun size={20} /></div>
       </button>
-      <button class="p-2" id="menu-toggle">
-        <Menu size={24} />
+      <button class="p-2" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
+        <Menu size={24} aria-hidden="true" />
       </button>
     </div>
   </div>
 
-  <!-- Mobile Nav -->
   <div id="mobile-menu" class="hidden md:hidden absolute top-16 left-0 w-full bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 p-6 flex flex-col gap-4 shadow-xl">
     {navItems.map(item => (
-      <a 
-        href={item.href} 
+      <a
+        href={item.href}
         class="text-lg font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
         onclick="document.getElementById('mobile-menu').classList.add('hidden')"
       >
@@ -96,21 +70,11 @@ const navItems = [
   </div>
 </nav>
 
-<style>
-  /* Ensure the standard navbar disappears in bento mode */
-  :global(body[data-layout="bento"]) nav {
-    display: none !important;
-  }
-</style>
-
 <script>
-  import { setLayout, getInitialLayout } from '../utils/layoutManager';
-
   const menuToggle = document.getElementById('menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
   const themeToggle = document.getElementById('theme-toggle');
   const themeToggleMobile = document.getElementById('theme-toggle-mobile');
-  const layoutButtons = document.querySelectorAll('[data-layout-option]');
 
   menuToggle?.addEventListener('click', () => {
     const isHidden = mobileMenu?.classList.toggle('hidden');
@@ -119,37 +83,10 @@ const navItems = [
 
   const toggleTheme = () => {
     const isDark = document.documentElement.classList.contains('dark');
-    if (isDark) {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
-    } else {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
-    }
+    document.documentElement.classList.toggle('dark', !isDark);
+    localStorage.setItem('theme', isDark ? 'light' : 'dark');
   };
 
   themeToggle?.addEventListener('click', toggleTheme);
   themeToggleMobile?.addEventListener('click', toggleTheme);
-
-  // Layout handling
-  function updateLayoutUI(activeLayout: string) {
-    layoutButtons.forEach(btn => {
-      if (btn.getAttribute('data-layout-option') === activeLayout) {
-        btn.classList.add('active', 'text-accent', 'bg-accent/5');
-      } else {
-        btn.classList.remove('active', 'text-accent', 'bg-accent/5');
-      }
-    });
-  }
-
-  layoutButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const layout = btn.getAttribute('data-layout-option') as any;
-      setLayout(layout);
-      updateLayoutUI(layout);
-    });
-  });
-
-  // Init UI
-  updateLayoutUI(getInitialLayout());
 </script>

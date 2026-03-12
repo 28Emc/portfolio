@@ -3,91 +3,70 @@ import '../styles/global.css';
 import ScrollToTop from '../components/ScrollToTop.astro';
 
 interface Props {
-	title: string;
-	description?: string;
+  title: string;
+  description?: string;
 }
 
-const { 
-  title, 
-  description = "Portfolio profesional de Edinson Medina Chinga - Full Stack Developer." 
+const {
+  title,
+  description = "Portfolio profesional de Edinson Medina Chinga - Full Stack Developer."
 } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="es">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/x-icon" href={`${import.meta.env.BASE_URL}/emc_favicon.ico`} />
-		<meta name="generator" content={Astro.generator} />
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/x-icon" href={`${import.meta.env.BASE_URL}/emc_favicon.ico`} />
+    <meta name="generator" content={Astro.generator} />
+
     <title>{title}</title>
     <meta name="description" content={description} />
-    
-    <!-- Open Graph / Facebook -->
+
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={`${import.meta.env.BASE_URL}/og-image.png`} />
 
-    <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={Astro.url} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={`${import.meta.env.BASE_URL}/og-image.png`} />
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 
-    <!-- Dark Mode Initializer -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+
     <script is:inline>
-      const theme = (() => {
+      const savedTheme = (() => {
         if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
           return localStorage.getItem('theme');
         }
-        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          return 'dark';
-        }
-        return 'light';
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
       })();
-    
-      if (theme === 'dark') {
-        document.documentElement.classList.add('dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-      }
-      
-      window.localStorage.setItem('theme', theme);
+      document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+      window.localStorage.setItem('theme', savedTheme);
     </script>
-	</head>
-	<body class="transition-all duration-500 ease-in-out antialiased overflow-x-hidden">
-    <script is:inline>
-      const savedLayout = localStorage.getItem('app-layout') || 'standard';
-      document.body.setAttribute('data-layout', savedLayout);
-    </script>
-		<slot />
+  </head>
+  <body class="transition-all duration-500 ease-in-out antialiased overflow-x-hidden">
+    <slot />
     <ScrollToTop />
-    
+
     <script>
-      /**
-       * Performance Optimized ScrollSpy using IntersectionObserver
-       */
       const observerOptions = {
         root: null,
         rootMargin: '-20% 0px -70% 0px',
         threshold: 0
       };
 
-      const observer = new IntersectionObserver((entries) => {
+      const scrollSpyObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            const id = entry.target.getAttribute('id');
-            updateActiveNavLink(id);
+            updateActiveNavLink(entry.target.getAttribute('id'));
           }
         });
       }, observerOptions);
@@ -95,26 +74,20 @@ const {
       function updateActiveNavLink(id: string | null) {
         if (!id) return;
         document.querySelectorAll('nav a, #mobile-menu a').forEach(link => {
-          const href = link.getAttribute('href');
-          if (href === `#${id}`) {
-            link.classList.add('active-nav-link', 'text-accent', 'font-bold');
-            link.setAttribute('aria-current', 'page');
-          } else {
-            link.classList.remove('active-nav-link', 'text-accent', 'font-bold');
-            link.removeAttribute('aria-current');
-          }
+          const isActive = link.getAttribute('href') === `#${id}`;
+          link.classList.toggle('active-nav-link', isActive);
+          link.classList.toggle('text-accent', isActive);
+          link.classList.toggle('font-bold', isActive);
+          isActive
+            ? link.setAttribute('aria-current', 'page')
+            : link.removeAttribute('aria-current');
         });
       }
 
-      // Initial observe
-      document.querySelectorAll('section[id]').forEach(section => {
-        observer.observe(section);
-      });
-
-      // Cleanup on page transitions if needed
+      document.querySelectorAll('section[id]').forEach(section => scrollSpyObserver.observe(section));
       document.addEventListener('astro:after-swap', () => {
-        document.querySelectorAll('section[id]').forEach(section => observer.observe(section));
+        document.querySelectorAll('section[id]').forEach(section => scrollSpyObserver.observe(section));
       });
     </script>
-	</body>
+  </body>
 </html>

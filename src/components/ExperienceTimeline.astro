@@ -14,16 +14,14 @@ import { Briefcase } from '@lucide/astro';
     </div>
 
     <div class="md:w-2/3 relative">
-      <!-- Vertical Line -->
       <div class="absolute left-0 md:left-8 top-0 h-full w-[2px] bg-slate-200 dark:bg-slate-800 hidden sm:block" aria-hidden="true"></div>
 
       <div class="space-y-12">
         {experiences.map((exp) => (
           <article class="relative pl-0 sm:pl-20 group hover:cursor-default">
-              <!-- Icon Dot -->
-              <div class="absolute left-[-4px] sm:left-8 top-0 p-2 rounded-full border-4 border-white dark:border-slate-950 bg-slate-900 dark:bg-slate-800 text-white dark:text-accent z-10 hidden sm:block -translate-x-1/2" aria-hidden="true">
-                <Briefcase size={16} />
-              </div>
+            <div class="absolute left-[-4px] sm:left-8 top-0 p-2 rounded-full border-4 border-white dark:border-slate-950 bg-slate-900 dark:bg-slate-800 text-white dark:text-accent z-10 hidden sm:block -translate-x-1/2" aria-hidden="true">
+              <Briefcase size={16} />
+            </div>
 
             <div class="glass-card p-8 rounded-2xl group-hover:shadow-md transition-shadow">
               <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
@@ -35,7 +33,7 @@ import { Briefcase } from '@lucide/astro';
                   {exp.period}
                 </time>
               </div>
-              
+
               <ul class="space-y-3 mb-6" aria-label={`Logros en ${exp.company}`}>
                 {exp.description.map(bullet => (
                   <li class="text-slate-600 dark:text-slate-400 text-sm flex gap-3">
