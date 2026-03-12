@@ -1,0 +1,26 @@
+---
+import type { Project } from '../../types';
+import Card from '../ui/Card.astro';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+
+<Card class="group hover:border-slate-300 border-dashed border-2 hover:cursor-default" padding="sm">
+  <h4 class="text-lg font-bold dark:text-white mb-2 group-hover:text-accent transition-colors">
+    {project.title}
+  </h4>
+  <p class="text-xs text-slate-500 dark:text-slate-400 mb-4 line-clamp-2">
+    {project.description}
+  </p>
+  <ul class="flex flex-wrap gap-2" aria-label={`Tecnologías utilizadas en ${project.title}`}>
+    {project.technologies.map(tech => (
+      <li class="text-[9px] font-bold uppercase tracking-wider text-slate-400">
+        {tech}
+      </li>
+    ))}
+  </ul>
+</Card>

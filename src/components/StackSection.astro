@@ -1,15 +1,16 @@
 ---
 import { stack } from '../data/stack';
 import { Database, Layout, Server, Cloud, Boxes } from '@lucide/astro';
+import SectionHeader from './ui/SectionHeader.astro';
 
 const categoryIcons = [Layout, Server, Database, Cloud, Boxes];
 ---
 
 <section id="stack" class="section-padding" aria-labelledby="stack-title">
-  <div class="text-center mb-16">
-    <h2 id="stack-title" class="text-sm font-bold text-accent uppercase tracking-widest mb-3">Ecosistema</h2>
-    <p class="text-4xl font-bold dark:text-white">Stack Tecnológico</p>
-  </div>
+  <SectionHeader 
+    tag="Ecosistema" 
+    title="Stack Tecnológico" 
+  />
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     {stack.map((group, index) => {

@@ -1,7 +1,4 @@
-export interface Metric {
-    value: string;
-    label: string;
-}
+import type { Metric } from '../types';
 
 export const metrics: Metric[] = [
     { value: "60%", label: "Reducción de carga operativa" },

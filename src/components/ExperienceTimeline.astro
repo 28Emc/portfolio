@@ -1,58 +1,65 @@
 ---
 import { experiences } from '../data/experience';
 import { Briefcase } from '@lucide/astro';
+import SectionHeader from './ui/SectionHeader.astro';
+import Card from './ui/Card.astro';
+import Badge from './ui/Badge.astro';
 ---
 
-<section id="experiencia" class="section-padding" aria-labelledby="exp-title">
+<section id="experiencia" class="section-padding" aria-labelledby="experience-title">
   <div class="flex flex-col md:flex-row gap-12">
     <div class="md:w-1/3">
-      <h2 id="exp-title" class="text-sm font-bold text-accent uppercase tracking-widest mb-3">Trayectoria</h2>
-      <p class="text-4xl font-bold dark:text-white mb-6 leading-tight">Experiencia Profesional</p>
-      <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
-        Enfoque en la creación de productos digitales robustos para instituciones financieras y logísticas, asegurando escalabilidad y eficiencia operativa.
-      </p>
+      <SectionHeader 
+        tag="Trayectoria" 
+        title="Experiencia Profesional" 
+        description="Enfoque en la creación de productos digitales robustos para instituciones financieras y logísticas, asegurando escalabilidad y eficiencia operativa."
+        centered={false}
+        id="experience-title"
+      />
     </div>
 
     <div class="md:w-2/3 relative">
       <div class="absolute left-0 md:left-8 top-0 h-full w-[2px] bg-slate-200 dark:bg-slate-800 hidden sm:block" aria-hidden="true"></div>
 
-      <div class="space-y-12">
+      <ul class="space-y-12" aria-label="Línea de tiempo de experiencia profesional">
         {experiences.map((exp) => (
-          <article class="relative pl-0 sm:pl-20 group hover:cursor-default">
-            <div class="absolute left-[-4px] sm:left-8 top-0 p-2 rounded-full border-4 border-white dark:border-slate-950 bg-slate-900 dark:bg-slate-800 text-white dark:text-accent z-10 hidden sm:block -translate-x-1/2" aria-hidden="true">
-              <Briefcase size={16} />
-            </div>
+          <li>
+            <article class="relative pl-0 sm:pl-20 group hover:cursor-default">
+              <div class="absolute left-[-4px] sm:left-8 top-0 p-2 rounded-full border-4 border-white dark:border-slate-950 bg-slate-900 dark:bg-slate-800 text-white dark:text-accent z-10 hidden sm:block -translate-x-1/2" aria-hidden="true">
+                <Briefcase size={16} />
+              </div>
 
-            <div class="glass-card p-8 rounded-2xl group-hover:shadow-md transition-shadow">
-              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
-                <div>
-                  <h3 class="text-xl font-bold dark:text-white">{exp.role}</h3>
-                  <p class="text-accent font-semibold">{exp.company}</p>
+              <Card class="group-hover:shadow-md">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                  <div>
+                    <h3 class="text-xl font-bold dark:text-white">{exp.role}</h3>
+                    <p class="text-accent font-semibold">{exp.company}</p>
+                  </div>
+                  <time class="text-xs font-bold px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-500 rounded-full w-fit">
+                    {exp.period}
+                  </time>
                 </div>
-                <time class="text-xs font-bold px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-500 rounded-full w-fit">
-                  {exp.period}
-                </time>
-              </div>
 
-              <ul class="space-y-3 mb-6" aria-label={`Logros en ${exp.company}`}>
-                {exp.description.map(bullet => (
-                  <li class="text-slate-600 dark:text-slate-400 text-sm flex gap-3">
-                    <span class="text-accent" aria-hidden="true">•</span> {bullet}
-                  </li>
-                ))}
-              </ul>
+                <ul class="space-y-3 mb-6" aria-label={`Logros en ${exp.company}`}>
+                  {exp.description.map(bullet => (
+                    <li class="text-slate-600 dark:text-slate-400 text-sm flex gap-3">
+                      <span class="text-accent" aria-hidden="true">•</span> {bullet}
+                    </li>
+                  ))}
+                </ul>
 
-              <div class="flex flex-wrap gap-2" aria-label="Tecnologías utilizadas">
-                {exp.technologies.map(tech => (
-                  <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 text-slate-500 rounded">
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </article>
+                <ul class="flex flex-wrap gap-2" aria-label={`Tecnologías utilizadas en ${exp.company}`}>
+                  {exp.technologies.map(tech => (
+                    <li>
+                      <Badge variant="solid">{tech}</Badge>
+                    </li>
+                  ))}
+                </ul>
+              </Card>
+            </article>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   </div>
 </section>

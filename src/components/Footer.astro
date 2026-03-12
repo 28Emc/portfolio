@@ -1,17 +1,26 @@
 ---
+import { profileInfo, navItems } from '../data/info';
 const currentYear = new Date().getFullYear();
+
+const footerLinks = navItems.filter(item => ['Inicio', 'Proyectos', 'Stack'].includes(item.label));
 ---
 
 <footer class="py-12 px-6 border-t border-slate-200 dark:border-slate-800">
   <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
     <p class="text-slate-500 dark:text-slate-500 text-sm font-medium">
-      © {currentYear} Edinson Medina Chinga. Hecho con <span class="text-red-500">♥</span> y Astro.
+      © {currentYear} {profileInfo.name}. Hecho con <span class="text-red-500" aria-label="amor">♥</span> y Astro.
     </p>
     
-    <div class="flex gap-8">
-      <a href="#hero" class="text-slate-400 hover:text-slate-900 dark:hover:text-white text-sm transition-colors">Inicio</a>
-      <a href="#proyectos" class="text-slate-400 hover:text-slate-900 dark:hover:text-white text-sm transition-colors">Proyectos</a>
-      <a href="#stack" class="text-slate-400 hover:text-slate-900 dark:hover:text-white text-sm transition-colors">Stack</a>
-    </div>
+    <nav aria-label="Navegación del pie de página">
+      <ul class="flex gap-8" role="list">
+        {footerLinks.map(link => (
+          <li>
+            <a href={link.href} class="text-slate-400 hover:text-slate-900 dark:hover:text-white text-sm transition-colors">
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
   </div>
 </footer>

@@ -1,7 +1,4 @@
-export interface StackCategory {
-    category: string;
-    skills: string[];
-}
+import type { StackCategory } from '../types';
 
 export const stack: StackCategory[] = [
     {

@@ -1,0 +1,64 @@
+---
+import type { Project } from '../../types';
+import { CheckCircle2, AlertCircle, Lightbulb, Star, Eye } from '@lucide/astro';
+import Card from '../ui/Card.astro';
+import Badge from '../ui/Badge.astro';
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+const projectSlug = project.title.replace(/\s+/g, '-').toLowerCase();
+---
+
+<Card class="flex flex-col overflow-hidden group hover:border-accent ring-2 ring-accent/10 border-accent/20 hover:cursor-default" padding="none">
+  <div class="p-8 flex-1">
+    <div class="flex justify-between items-start mb-6">
+      <div class="flex items-center gap-2">
+        <Star size={16} class="text-accent fill-accent" aria-hidden="true" />
+        <h3 id={`project-title-${projectSlug}`} class="text-2xl font-bold dark:text-white group-hover:text-accent transition-colors">
+          {project.title}
+        </h3>
+      </div>
+      {project.picImg && (
+        <button
+          class="project-image-trigger p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-accent hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer"
+          data-image={`${import.meta.env.BASE_URL}/${project.picImg.startsWith('/') ? project.picImg.substring(1) : project.picImg}`}
+          aria-label={`Ver vista previa de ${project.title}`}
+          title="Ver Vista Previa"
+        >
+          <Eye size={20} aria-hidden="true" />
+        </button>
+      )}
+    </div>
+
+    <p class="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed text-sm">
+      {project.description}
+    </p>
+
+    <dl class="space-y-4 mb-4">
+      {[
+        { icon: AlertCircle, label: "Problema", text: project.problem, color: "text-red-400" },
+        { icon: Lightbulb, label: "Solución", text: project.solution, color: "text-blue-400" },
+        { icon: CheckCircle2, label: "Resultado", text: project.result, color: "text-green-400" }
+      ].map(({ icon: Icon, label, text, color }) => (
+        <div class="flex gap-4">
+          <dt class:list={["mt-1 shrink-0", color]} aria-hidden="true"><Icon size={16} /></dt>
+          <div class="flex flex-col">
+            <dt class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">{label}</dt>
+            <dd class="text-xs text-slate-700 dark:text-slate-300 font-medium">{text}</dd>
+          </div>
+        </div>
+      ))}
+    </dl>
+  </div>
+
+  <ul class="p-6 bg-slate-50 dark:bg-slate-800/20 border-t border-slate-100 dark:border-slate-800 flex flex-wrap gap-2" aria-label={`Tecnologías utilizadas en ${project.title}`}>
+    {project.technologies.map(tech => (
+      <li>
+        <Badge variant="solid" class="bg-white dark:bg-slate-900 rounded-full">{tech}</Badge>
+      </li>
+    ))}
+  </ul>
+</Card>

@@ -1,0 +1,27 @@
+---
+interface Props {
+  tag?: string;
+  title: string;
+  description?: string;
+  centered?: boolean;
+  id?: string;
+}
+
+const { tag, title, description, centered = true, id } = Astro.props;
+---
+
+<div class:list={["mb-16", centered ? "text-center" : ""]}>
+  {tag && (
+    <span class="block text-sm font-bold text-accent uppercase tracking-widest mb-3">
+      {tag}
+    </span>
+  )}
+  <h2 id={id} class="text-3xl md:text-4xl font-bold dark:text-white leading-tight">
+    {title}
+  </h2>
+  {description && (
+    <p class="mt-6 text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto">
+      {description}
+    </p>
+  )}
+</div>

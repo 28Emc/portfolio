@@ -1,0 +1,70 @@
+---
+import { X } from '@lucide/astro';
+---
+
+<div
+  id="project-modal"
+  class="fixed inset-0 z-[300] bg-[#020617]/90 backdrop-blur-sm opacity-0 pointer-events-none transition-all duration-300 flex items-center justify-center p-4 aria-hidden"
+>
+  <div class="relative max-w-5xl w-full bg-white dark:bg-slate-900 border border-transparent dark:border-white/10 rounded-[2rem] overflow-hidden shadow-2xl translate-y-8 transition-transform duration-300">
+    <button
+      id="close-project-modal"
+      class="absolute top-4 right-4 p-3 rounded-full bg-black/20 hover:bg-black/40 text-white backdrop-blur-md z-10 transition-colors cursor-pointer"
+      aria-label="Cerrar vista previa"
+    >
+      <X size={24} aria-hidden="true" />
+    </button>
+    <div class="flex items-center justify-center">
+      <img id="modal-project-img" src="" alt="Vista previa del proyecto" class="max-w-full max-h-[90vh] object-contain rounded-[1.5rem]" />
+    </div>
+  </div>
+</div>
+
+<style>
+  #project-modal.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  #project-modal.active > div {
+    transform: translateY(0);
+  }
+</style>
+
+<script>
+  const projectModal = document.getElementById('project-modal');
+  const projectModalImg = document.getElementById('modal-project-img') as HTMLImageElement;
+  const closeModalBtn = document.getElementById('close-project-modal');
+
+  function openProjectModal(imageSrc: string) {
+    if (!projectModal || !projectModalImg) return;
+    projectModalImg.src = imageSrc;
+    projectModal.classList.add('active');
+    projectModal.removeAttribute('aria-hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeProjectModal() {
+    if (!projectModal) return;
+    projectModal.classList.remove('active');
+    projectModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('click', (e) => {
+    const trigger = (e.target as HTMLElement).closest('.project-image-trigger');
+    if (trigger) {
+      e.preventDefault();
+      e.stopPropagation();
+      const imageSrc = trigger.getAttribute('data-image');
+      if (imageSrc) openProjectModal(imageSrc);
+    }
+  });
+
+  closeModalBtn?.addEventListener('click', closeProjectModal);
+  projectModal?.addEventListener('click', (e) => {
+    if (e.target === projectModal) closeProjectModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeProjectModal();
+  });
+</script>

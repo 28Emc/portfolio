@@ -1,0 +1,22 @@
+---
+interface Props {
+  variant?: 'outline' | 'solid' | 'ghost';
+  class?: string;
+}
+
+const { variant = 'outline', class: className } = Astro.props;
+
+const variants = {
+  outline: "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-500",
+  solid: "bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 text-slate-500",
+  ghost: "text-slate-400"
+};
+---
+
+<span class:list={[
+  "text-[10px] font-semibold uppercase tracking-wider px-2 py-1 rounded",
+  variants[variant],
+  className
+]}>
+  <slot />
+</span>
