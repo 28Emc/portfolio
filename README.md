@@ -3,7 +3,7 @@
 ![Astro](https://img.shields.io/badge/Astro-BC52EE?style=for-the-badge&logo=astro&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
-![i18n](https://img.shields.io/badge/i18n-Spanish/English-brightgreen?style=for-the-badge)
+![i18n](https://img.shields.io/badge/i18n-ES/EN/IT-brightgreen?style=for-the-badge)
 
 Bienvenido a mi espacio digital. Este proyecto no es solo una hoja de vida, es una muestra de cómo entiendo el desarrollo de software: **eficiente, elegante y orientado a resultados que impulsan el negocio.**
 
@@ -19,12 +19,12 @@ He construido este portafolio utilizando las herramientas más modernas del ecos
 
 ## ✨ Lo que hace especial a este sitio
 
-* **🌐 Soporte Multilingüe (i18n)**: Contenido disponible en Español e Inglés, gestionado mediante una arquitectura de datos localizada para un alcance global.
-* **🎥 Animaciones Cinematográficas**: Implementación de *Scroll Reveal* y micro-interacciones para una experiencia dinámica y pulida.
-* **🖱️ Micro-interacciones Premium**: Barra de progreso de lectura receptiva, efectos *Tilt* 3D en tarjetas de proyectos y transiciones de estado elegantes.
-* **Modo Oscuro Premium**: Pensado en la comodidad visual, con una paleta de colores equilibrada y moderna.
+* **🌐 Arquitectura Trilingüe (i18n)**: Contenido disponible en **Español, Inglés e Italiano**, gestionado mediante una infraestructura escalable que permite añadir nuevos idiomas en minutos.
+* **🎥 Animaciones Cinematográficas**: Implementación de *Scroll Reveal*, efectos de *Glassmorphism* y micro-interacciones para una experiencia dinámica y pulida.
+* **🖱️ Micro-interacciones Premium**: Selector de idiomas circular, efectos *Tilt* 3D en proyectos, barra de progreso de lectura y transiciones de estado elegantes.
+* **🌓 Modo Oscuro Inteligente**: Persistencia de tema optimizada para Astro View Transitions, garantizando una transición fluida entre páginas y lenguajes.
 * **Diseño para Todos**: Implementado con altos estándares de accesibilidad, asegurando que el contenido sea legible y navegable para cualquier persona.
-* **Velocidad Real**: Optimizado para cargar casi instantáneamente mediante el uso de Astro 6 y formatos de imagen WebP.
+* **Velocidad Extrema**: Construido con **Astro 6** y **Tailwind CSS 4**, optimizado para cargar instantáneamente y con un rendimiento visual de primer nivel.
 
 ---
 
@@ -32,11 +32,11 @@ He construido este portafolio utilizando las herramientas más modernas del ecos
 
 Para asegurar la escalabilidad y mantenibilidad, el código sigue principios de desarrollo profesional:
 
-* **Accesibilidad (A11y)**: Uso de HTML semántico, etiquetas ARIA y roles descriptivos para una experiencia inclusiva.
-* **Tipado Estricto**: Todo el flujo de datos está validado mediante interfaces de TypeScript.
-* **Arquitectura Modular**: Componentes desacoplados y reutilizables bajo una estructura de diseño sólida.
-* **Estructura i18n Escalable**: Datos separados por idiomas en carpetas específicas (`src/data/es` y `src/data/en`), facilitando la adición de nuevos idiomas.
-* **Optimización de Assets**: Procesamiento dinámico de imágenes mediante la API de Astro para reducir el peso de carga.
+* **Arquitectura de Datos Localizada**: Toda la información profesional está desacoplada de la UI en archivos `.ts` organizados por lenguaje (`src/data/[es|en|it]`).
+* **Tipado Estricto de Traducciones**: Uso de interfaces globales para asegurar que todos los idiomas tengan la misma estructura de datos, evitando errores de contenido faltante.
+* **Scripts Modulares & Optimización**: Lógica de cliente centralizada en controladores específicos para manejar el ciclo de vida de Astro (Astro Transitions).
+* **SEO & Accesibilidad (A11y)**: Uso de HTML semántico, etiquetas ARIA y estrategias de SEO dinámico según el idioma actual.
+* **Optimización de Assets**: Procesamiento dinámico de imágenes mediante la API de Astro para reducir el peso de carga mediante formatos WebP.
 
 ---
 
@@ -48,20 +48,19 @@ Para asegurar la escalabilidad y mantenibilidad, el código sigue principios de 
 | **Estilos** | Tailwind CSS 4 |
 | **Lógica** | TypeScript |
 | **Animaciones** | Intersection Observer API & CSS Keyframes |
-| **Internalización** | @astrojs/i18n |
+| **Internalización** | Arquitectura personalizada basada en `DATA_MAP` |
 | **Iconografía** | Lucide |
 
 ---
 
 ## 📂 Organización del Proyecto
 
-* `src/data/`: Fuente de verdad para toda la información profesional, organizada por idioma.
-* `src/utils/i18n.ts`: Helper centralizado para la carga de datos localizados.
-* `src/pages/[...lang].astro`: Ruta dinámica para la generación estática de versiones multilingües.
-* `src/types/`: Definiciones de interfaces y tipos globales.
-* `src/components/ui/`: Componentes base (Botones, Cards, Títulos).
-* `src/components/projects/`: Lógica específica para el portafolio, modales y efectos visuales.
-* `src/layouts/`: Estructura técnica y optimización SEO.
+* `src/data/`: Fuente de verdad para toda la información, organizada por idioma (`es`, `en`, `it`).
+* `src/utils/i18n.ts`: Helper centralizado con `DATA_MAP` para carga dinámica y escalable de idiomas.
+* `src/pages/[...lang].astro`: Ruta dinámica para la generación estática (SSG) de todas las versiones idiomáticas.
+* `src/components/ui/`: Sistema de diseño base (GlassCards, Badges, Botones).
+* `src/components/projects/`: Lógica de portafolio, modales de detalle y efectos Tilt.
+* `src/layouts/`: Estructura técnica, control de temas y optimización SEO.
 
 ---
 
@@ -72,12 +71,7 @@ Si deseas explorar el código o probarlo en tu máquina:
 1. **Instala las dependencias:** `npm install`
 2. **Inicia el modo desarrollo:** `npm run dev`
 3. **Genera la versión final:** `npm run build`
-
----
-
-## 🌐 Sobre el despliegue
-
-El sitio se actualiza automáticamente a través de **GitHub Actions**, lo que me permite mantener mi información al día con cada mejora que realizo en el código.
+4. **Previsualiza la producción:** `npm run preview`
 
 ---
 
@@ -85,8 +79,8 @@ El sitio se actualiza automáticamente a través de **GitHub Actions**, lo que m
 
 Siempre estoy abierto a charlar sobre nuevas oportunidades o retos tecnológicos.
 
-* **Correo:** [edmech25@gmail.com](mailto:edmech25@gmail.com)
 * **LinkedIn:** [/in/edinson-medina-chinga](https://linkedin.com/in/edinson-medina-chinga)
 * **GitHub:** [@28Emc](https://github.com/28Emc)
+* **Correo:** [edmech25@gmail.com](mailto:edmech25@gmail.com)
 
 Hecho con dedicación por **Edinson Medina Chinga**
