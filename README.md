@@ -3,6 +3,7 @@
 ![Astro](https://img.shields.io/badge/Astro-BC52EE?style=for-the-badge&logo=astro&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![i18n](https://img.shields.io/badge/i18n-Spanish/English-brightgreen?style=for-the-badge)
 
 Bienvenido a mi espacio digital. Este proyecto no es solo una hoja de vida, es una muestra de cómo entiendo el desarrollo de software: **eficiente, elegante y orientado a resultados que impulsan el negocio.**
 
@@ -18,10 +19,12 @@ He construido este portafolio utilizando las herramientas más modernas del ecos
 
 ## ✨ Lo que hace especial a este sitio
 
-* **Experiencia Fluida**: Una navegación intuitiva diseñada para que encuentres lo que buscas sin distracciones.
+* **🌐 Soporte Multilingüe (i18n)**: Contenido disponible en Español e Inglés, gestionado mediante una arquitectura de datos localizada para un alcance global.
+* **🎥 Animaciones Cinematográficas**: Implementación de *Scroll Reveal* y micro-interacciones para una experiencia dinámica y pulida.
+* **🖱️ Micro-interacciones Premium**: Barra de progreso de lectura receptiva, efectos *Tilt* 3D en tarjetas de proyectos y transiciones de estado elegantes.
 * **Modo Oscuro Premium**: Pensado en la comodidad visual, con una paleta de colores equilibrada y moderna.
 * **Diseño para Todos**: Implementado con altos estándares de accesibilidad, asegurando que el contenido sea legible y navegable para cualquier persona.
-* **Velocidad Real**: Optimizado para cargar casi instantáneamente, porque el tiempo es el recurso más valioso.
+* **Velocidad Real**: Optimizado para cargar casi instantáneamente mediante el uso de Astro 6 y formatos de imagen WebP.
 
 ---
 
@@ -32,7 +35,8 @@ Para asegurar la escalabilidad y mantenibilidad, el código sigue principios de 
 * **Accesibilidad (A11y)**: Uso de HTML semántico, etiquetas ARIA y roles descriptivos para una experiencia inclusiva.
 * **Tipado Estricto**: Todo el flujo de datos está validado mediante interfaces de TypeScript.
 * **Arquitectura Modular**: Componentes desacoplados y reutilizables bajo una estructura de diseño sólida.
-* **Datos Centralizados**: Separación total de la lógica visual y el contenido, facilitando actualizaciones rápidas sin tocar el código.
+* **Estructura i18n Escalable**: Datos separados por idiomas en carpetas específicas (`src/data/es` y `src/data/en`), facilitando la adición de nuevos idiomas.
+* **Optimización de Assets**: Procesamiento dinámico de imágenes mediante la API de Astro para reducir el peso de carga.
 
 ---
 
@@ -43,16 +47,20 @@ Para asegurar la escalabilidad y mantenibilidad, el código sigue principios de 
 | **Estructura** | Astro 6 (Latest) |
 | **Estilos** | Tailwind CSS 4 |
 | **Lógica** | TypeScript |
+| **Animaciones** | Intersection Observer API & CSS Keyframes |
+| **Internalización** | @astrojs/i18n |
 | **Iconografía** | Lucide |
 
 ---
 
 ## 📂 Organización del Proyecto
 
-* `src/data/`: Fuente de verdad para toda la información profesional.
+* `src/data/`: Fuente de verdad para toda la información profesional, organizada por idioma.
+* `src/utils/i18n.ts`: Helper centralizado para la carga de datos localizados.
+* `src/pages/[...lang].astro`: Ruta dinámica para la generación estática de versiones multilingües.
 * `src/types/`: Definiciones de interfaces y tipos globales.
 * `src/components/ui/`: Componentes base (Botones, Cards, Títulos).
-* `src/components/projects/`: Lógica específica para el portafolio y modales.
+* `src/components/projects/`: Lógica específica para el portafolio, modales y efectos visuales.
 * `src/layouts/`: Estructura técnica y optimización SEO.
 
 ---

@@ -1,31 +1,38 @@
 ---
-import { metrics } from '../data/metrics';
+import { getI18NData } from '../utils/i18n';
 import { TrendingUp, Zap, Clock, Users, MousePointer2 } from '@lucide/astro';
 import SectionHeader from './ui/SectionHeader.astro';
 import Card from './ui/Card.astro';
 
+const lang = Astro.currentLocale || 'es';
+const { metrics, ui } = getI18NData(lang);
+const { metrics: metricsData } = metrics;
+
 const metricIcons = [TrendingUp, Clock, Zap, Users, MousePointer2];
 ---
 
-<section id="impacto" class="section-padding bg-slate-100/50 dark:bg-slate-900/30" aria-labelledby="metrics-title">
+<section id="impacto" class="section-padding bg-slate-100/50 dark:bg-slate-900/30" aria-labelledby="impacto-header">
   <SectionHeader 
-    tag="Impacto Medible" 
-    title="Resultados que impulsan el negocio" 
+    id="impacto-header"
+    tag={ui.sections.impact.tag} 
+    title={ui.sections.impact.title} 
   />
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 hover:cursor-default">
-    {metrics.map((metric, index) => {
+    {metricsData.map((metric, index) => {
       const Icon = metricIcons[index % metricIcons.length];
       return (
-        <Card class="flex flex-col items-center text-center group hover:border-accent duration-300">
-          <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 group-hover:text-accent group-hover:bg-accent/10 transition-colors mb-6" aria-hidden="true">
-            <Icon size={28} />
-          </div>
-          <span class="text-4xl font-extrabold text-slate-900 dark:text-white mb-2" aria-label={`Valor: ${metric.value}`}>
-            {metric.value}
-          </span>
-          <h3 class="text-slate-500 dark:text-slate-400 text-sm font-medium leading-tight">{metric.label}</h3>
-        </Card>
+        <div class="reveal-on-scroll" data-animation="fade-in" data-delay={index * 100}>
+          <Card class="flex flex-col items-center text-center group hover:border-accent duration-300 hover:scale-[1.02] active:scale-95">
+            <div class="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 group-hover:text-accent group-hover:bg-accent/10 transition-colors mb-6" aria-hidden="true">
+              <Icon size={28} />
+            </div>
+            <span class="text-4xl font-extrabold text-slate-900 dark:text-white mb-2" aria-label={`Valor: ${metric.value}`}>
+              {metric.value}
+            </span>
+            <h3 class="text-slate-500 dark:text-slate-400 text-sm font-medium leading-tight">{metric.label}</h3>
+          </Card>
+        </div>
       );
     })}
   </div>

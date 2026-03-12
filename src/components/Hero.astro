@@ -1,11 +1,22 @@
 ---
 import { ChevronRight, Download } from '@lucide/astro';
-import { profileInfo } from '../data/info';
+import { getI18NData } from '../utils/i18n';
+
+const lang = Astro.currentLocale || 'es';
+const { info, ui } = getI18NData(lang);
+const { profileInfo } = info;
 ---
 
-<section id="hero" class="min-h-screen flex flex-col justify-center section-padding pt-32">
-  <div class="max-w-4xl">
-    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-semibold mb-6 animate-fade-in" aria-label={`Estado: ${profileInfo.availability}`}>
+<section id="hero" class="min-h-screen flex flex-col justify-center section-padding pt-32 relative overflow-hidden">
+  <!-- Background subtle glow -->
+  <div class="absolute top-1/4 -left-20 w-96 h-96 bg-accent/5 rounded-full blur-3xl -z-10 animate-pulse-slow"></div>
+  
+  <div class="max-w-4xl relative z-10">
+    <div 
+      class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-semibold mb-6 reveal-on-scroll" 
+      aria-label={`${ui.hero.statusLabel}: ${profileInfo.availability}`}
+      data-animation="fade-in"
+    >
       <span class="relative flex h-3 w-3" aria-hidden="true">
         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75"></span>
         <span class="relative inline-flex rounded-full h-3 w-3 bg-accent"></span>
@@ -13,51 +24,51 @@ import { profileInfo } from '../data/info';
       {profileInfo.availability}
     </div>
     
-    <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight">
+    <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight reveal-on-scroll" data-animation="slide-up" data-delay="100">
       {profileInfo.name}
     </h1>
-    <h2 class="text-3xl md:text-4xl text-slate-500 dark:text-slate-400 font-medium mb-8">
+    <h2 class="text-3xl md:text-4xl text-slate-500 dark:text-slate-400 font-medium mb-8 reveal-on-scroll" data-animation="slide-up" data-delay="200">
       {profileInfo.title}
     </h2>
     
-    <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-10 max-w-2xl leading-relaxed">
-      Más de 4 años creando soluciones escalables en los sectores financiero, logístico y cobranzas. 
-      Especializado en arquitecturas modernas con <strong class="text-slate-900 dark:text-white font-medium underline decoration-accent">Angular, NestJS, Spring Boot y GCP</strong>, optimizando flujos operativos y rendimiento web.
-    </p>
+    <div class="reveal-on-scroll" data-animation="slide-up" data-delay="300">
+      <p class="text-lg md:text-xl text-slate-600 dark:text-slate-400 mb-10 max-w-2xl leading-relaxed" set:html={profileInfo.bio.replace(/\*\*(.*?)\*\*/g, '<strong class="text-slate-900 dark:text-white font-medium underline decoration-accent">$1</strong>')}>
+      </p>
+    </div>
     
-    <div class="flex flex-wrap gap-4">
+    <div class="flex flex-wrap gap-4 reveal-on-scroll" data-animation="slide-up" data-delay="400">
       <a 
         href="#experiencia" 
-        class="px-8 py-4 bg-accent text-white rounded-xl font-bold flex items-center gap-2 hover:translate-y-[-2px] transition-all shadow-lg hover:shadow-xl"
-        aria-label="Ver mi experiencia profesional"
+        class="px-8 py-4 bg-accent text-white rounded-xl font-bold flex items-center gap-2 hover:translate-y-[-2px] hover:shadow-accent/20 transition-all shadow-lg active:scale-95"
+        aria-label={ui.hero.expAria}
       >
-        Ver Experiencia <ChevronRight size={18} aria-hidden="true" />
+        {ui.hero.expBtn} <ChevronRight size={18} aria-hidden="true" />
       </a>
       <a 
         href="#proyectos" 
-        class="px-8 py-4 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 rounded-xl font-bold flex items-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all"
-        aria-label="Ver mis proyectos destacados"
+        class="px-8 py-4 bg-white dark:bg-slate-900 text-slate-900 dark:text-white border border-slate-200 dark:border-slate-800 rounded-xl font-bold flex items-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-800 hover:translate-y-[-2px] transition-all active:scale-95"
+        aria-label={ui.hero.projAria}
       >
-        Proyectos Destacados
+        {ui.hero.projBtn}
       </a>
       <a 
         href={`${import.meta.env.BASE_URL}/${profileInfo.cvFile}`} 
         download={profileInfo.cvFile}
-        class="px-8 py-4 text-slate-600 dark:text-slate-400 font-semibold flex items-center gap-2 hover:text-slate-900 dark:hover:text-white transition-colors"
-        aria-label="Descargar mi Currículum Vitae"
+        class="px-8 py-4 text-slate-600 dark:text-slate-400 font-semibold flex items-center gap-2 hover:text-slate-900 dark:hover:text-white transition-colors group"
+        aria-label={ui.hero.cvAria}
       >
-        <Download size={18} aria-hidden="true" /> Descargar CV
+        <Download size={18} aria-hidden="true" class="group-hover:translate-y-1 transition-transform" /> {ui.hero.cvBtn}
       </a>
     </div>
   </div>
 </section>
 
 <style>
-  @keyframes fade-in {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+  .animate-pulse-slow {
+    animation: pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
-  .animate-fade-in {
-    animation: fade-in 0.8s ease-out forwards;
+  @keyframes pulse {
+    0%, 100% { opacity: 0.1; transform: scale(1); }
+    50% { opacity: 0.3; transform: scale(1.1); }
   }
 </style>

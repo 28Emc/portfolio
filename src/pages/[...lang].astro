@@ -9,13 +9,28 @@ import StackSection from '../components/StackSection.astro';
 import EducationSection from '../components/EducationSection.astro';
 import ContactSection from '../components/ContactSection.astro';
 import Footer from '../components/Footer.astro';
+
+import { getAvailableLocales, getI18NData } from '../utils/i18n';
+
+export function getStaticPaths() {
+  const locales = getAvailableLocales();
+  return locales.map(locale => ({
+    params: { lang: locale === 'es' ? undefined : locale }
+  }));
+}
+
+const lang = Astro.currentLocale || 'es';
+const { info, ui } = getI18NData(lang);
+const title = `${info.profileInfo.name} | ${info.profileInfo.title}`;
 ---
 
-<MainLayout title="Edinson Medina Chinga | Full Stack Developer">
-  <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-[100] bg-accent text-white px-4 py-2 rounded-lg">
-    Saltar al contenido principal
+<MainLayout title={title}>
+  <!-- Accessibility Skip Link -->
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-[100] bg-accent text-white px-4 py-2 rounded-lg transition-all">
+    {ui.common.skipLink}
   </a>
 
+  <!-- Reading Progress (handled in Navbar) -->
   <Navbar />
 
   <main id="main-content">

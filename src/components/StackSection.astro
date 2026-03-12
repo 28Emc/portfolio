@@ -1,37 +1,48 @@
 ---
-import { stack } from '../data/stack';
+import { getI18NData } from '../utils/i18n';
 import { Database, Layout, Server, Cloud, Boxes } from '@lucide/astro';
 import SectionHeader from './ui/SectionHeader.astro';
+
+const lang = Astro.currentLocale || 'es';
+const { stack: stackData, ui } = getI18NData(lang);
+const { stack } = stackData;
 
 const categoryIcons = [Layout, Server, Database, Cloud, Boxes];
 ---
 
-<section id="stack" class="section-padding" aria-labelledby="stack-title">
+<section id="stack" class="section-padding" aria-labelledby="stack-header">
   <SectionHeader 
-    tag="Ecosistema" 
-    title="Stack Tecnológico" 
+    id="stack-header"
+    tag={ui.sections.stack.tag} 
+    title={ui.sections.stack.title} 
   />
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     {stack.map((group, index) => {
       const Icon = categoryIcons[index % categoryIcons.length];
       return (
-        <article class="p-8 rounded-3xl border border-slate-200 dark:border-slate-800 hover:border-accent transition-colors">
-          <div class="flex items-center gap-4 mb-8">
-            <div class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-white" aria-hidden="true">
-              <Icon size={24} />
+        <div class="reveal-on-scroll" data-animation="slide-up" data-delay={index * 100}>
+          <article class="p-8 h-full rounded-3xl border border-slate-200 dark:border-slate-800 hover:border-accent group transition-all duration-300 hover:shadow-xl hover:shadow-accent/5">
+            <div class="flex items-center gap-4 mb-8">
+              <div class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-white group-hover:bg-accent group-hover:text-white transition-all duration-300" aria-hidden="true">
+                <Icon size={24} />
+              </div>
+              <h3 class="text-xl font-bold dark:text-white group-hover:text-accent transition-colors">{group.category}</h3>
             </div>
-            <h3 class="text-xl font-bold dark:text-white">{group.category}</h3>
-          </div>
 
-          <ul class="flex flex-wrap gap-3" aria-label={`Tecnologías de ${group.category}`}>
-            {group.skills.map(skill => (
-              <li class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 text-sm font-medium">
-                {skill}
-              </li>
-            ))}
-          </ul>
-        </article>
+            <ul class="flex flex-wrap gap-3" aria-label={`Tecnologías de ${group.category}`}>
+              {group.skills.map((skill, sIndex) => (
+                <li 
+                  class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800/50 text-slate-700 dark:text-slate-300 text-sm font-medium hover:bg-accent hover:text-white transition-colors duration-300 cursor-default reveal-on-scroll"
+                  data-animation="scale-up"
+                  data-delay={(index * 100) + (sIndex * 50)}
+                >
+                  {skill}
+                </li>
+              ))}
+            </ul>
+          </article>
+        </div>
       );
     })}
   </div>

@@ -1,21 +1,34 @@
 ---
-import { profileInfo, navItems } from '../data/info';
+import { getI18NData } from '../utils/i18n';
 const currentYear = new Date().getFullYear();
 
-const footerLinks = navItems.filter(item => ['Inicio', 'Proyectos', 'Stack'].includes(item.label));
+const lang = Astro.currentLocale || 'es';
+const { info, ui } = getI18NData(lang);
+const { profileInfo, navItems } = info;
+
+// Map translated names to find correct links
+const homeLabels = ['Inicio', 'Home'];
+const projectLabels = ['Proyectos', 'Projects'];
+const stackLabels = ['Stack'];
+
+const footerLinks = navItems.filter(item => 
+  homeLabels.includes(item.label) || 
+  projectLabels.includes(item.label) || 
+  stackLabels.includes(item.label)
+);
 ---
 
 <footer class="py-12 px-6 border-t border-slate-200 dark:border-slate-800">
   <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
     <p class="text-slate-500 dark:text-slate-500 text-sm font-medium">
-      © {currentYear} {profileInfo.name}. Hecho con <span class="text-red-500" aria-label="amor">♥</span> y Astro.
+      © {currentYear} {profileInfo.name}. {ui.common.madeWith} <span class="text-red-500" aria-label="amor">♥</span> {ui.common.and} Astro.
     </p>
     
     <nav aria-label="Navegación del pie de página">
       <ul class="flex gap-8" role="list">
         {footerLinks.map(link => (
           <li>
-            <a href={link.href} class="text-slate-400 hover:text-slate-900 dark:hover:text-white text-sm transition-colors">
+            <a href={link.href} class="text-slate-400 hover:text-slate-900 dark:hover:text-white text-sm transition-all hover:scale-110 block">
               {link.label}
             </a>
           </li>

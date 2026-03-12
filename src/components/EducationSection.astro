@@ -1,27 +1,34 @@
 ---
+import { getI18NData } from '../utils/i18n';
 import { GraduationCap, Languages, Award, ShieldCheck } from '@lucide/astro';
 import SectionHeader from './ui/SectionHeader.astro';
 import Card from './ui/Card.astro';
-import { educationItems, languageItems, certificationItems } from '../data/education';
+
+const lang = Astro.currentLocale || 'es';
+const { education: eduData, ui } = getI18NData(lang);
+const { educationItems, languageItems, certificationItems } = eduData;
 ---
 
-<section id="educacion" class="section-padding bg-slate-100/30 dark:bg-slate-900/10" aria-labelledby="education-title">
+<section id="educacion" class="section-padding bg-slate-100/30 dark:bg-slate-900/10" aria-labelledby="educacion-header">
   <div class="max-w-6xl mx-auto">
     <SectionHeader 
-      tag="Formación" 
-      title="Educación, Idiomas & Certificaciones" 
-      id="education-title"
+      id="educacion-header"
+      tag={ui.sections.edu.tag} 
+      title={ui.sections.edu.title} 
     />
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
       <div class="space-y-6">
-        <h3 class="text-xl font-bold dark:text-white flex items-center gap-3">
-          <GraduationCap class="text-accent" aria-hidden="true" /> Educación
-        </h3>
+        <div class="reveal-on-scroll" data-animation="fade-in">
+          <h3 class="text-xl font-bold dark:text-white flex items-center gap-3">
+            <GraduationCap class="text-accent" aria-hidden="true" /> {ui.sections.edu.eduHeader}
+          </h3>
+        </div>
+        
         <ul class="space-y-6" aria-label="Lista de formación académica">
-          {educationItems.map(item => (
-            <li>
-              <Card class="group hover:border-accent/40 transition-colors" padding="sm">
+          {educationItems.map((item, index) => (
+            <li class="reveal-on-scroll" data-animation="slide-up" data-delay={index * 100}>
+              <Card class="group hover:border-accent transition-all duration-300 hover:translate-x-1" padding="sm">
                 <h4 class="text-lg font-bold dark:text-white mb-1 leading-tight group-hover:text-accent transition-colors">{item.degree}</h4>
                 <p class="text-slate-500 dark:text-slate-400 font-medium text-sm">{item.institution}</p>
                 <time class="text-slate-400 dark:text-slate-500 text-xs mt-2 uppercase font-bold tracking-widest">{item.period}</time>
@@ -30,15 +37,18 @@ import { educationItems, languageItems, certificationItems } from '../data/educa
           ))}
         </ul>
 
-        <h3 class="text-xl font-bold dark:text-white flex items-center gap-3 pt-6">
-          <Languages class="text-accent" aria-hidden="true" /> Idiomas
-        </h3>
+        <div class="reveal-on-scroll" data-animation="fade-in">
+          <h3 class="text-xl font-bold dark:text-white flex items-center gap-3 pt-6">
+            <Languages class="text-accent" aria-hidden="true" /> {ui.sections.edu.langHeader}
+          </h3>
+        </div>
+        
         <ul class="grid grid-cols-1 sm:grid-cols-3 gap-4" aria-label="Idiomas y niveles">
-          {languageItems.map(lang => (
-            <li>
-              <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 text-center group hover:border-accent/40 transition-colors">
-                <p class="font-bold dark:text-white text-sm group-hover:text-accent">{lang.name}</p>
-                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">{lang.level}</p>
+          {languageItems.map((langItem, index) => (
+            <li class="reveal-on-scroll" data-animation="scale-up" data-delay={index * 100}>
+              <div class="p-4 h-full rounded-xl border border-slate-200 dark:border-slate-800 text-center group hover:border-accent transition-all duration-300 hover:shadow-lg hover:shadow-accent/5">
+                <p class="font-bold dark:text-white text-sm group-hover:text-accent transition-colors">{langItem.name}</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">{langItem.level}</p>
               </div>
             </li>
           ))}
@@ -46,15 +56,18 @@ import { educationItems, languageItems, certificationItems } from '../data/educa
       </div>
 
       <div class="space-y-6">
-        <h3 class="text-xl font-bold dark:text-white flex items-center gap-3">
-          <Award class="text-accent" aria-hidden="true" /> Certificaciones
-        </h3>
+        <div class="reveal-on-scroll" data-animation="fade-in">
+          <h3 class="text-xl font-bold dark:text-white flex items-center gap-3">
+            <Award class="text-accent" aria-hidden="true" /> {ui.sections.edu.certHeader}
+          </h3>
+        </div>
+        
         <ul class="space-y-4" aria-label="Lista de certificaciones">
-          {certificationItems.map(cert => (
-            <li>
-              <Card class="group hover:border-accent/40 transition-colors" padding="sm">
+          {certificationItems.map((cert, index) => (
+            <li class="reveal-on-scroll" data-animation="slide-up" data-delay={index * 100}>
+              <Card class="group hover:border-accent transition-all duration-300 hover:translate-x-1" padding="sm">
                 <div class="flex items-start gap-4">
-                  <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 text-accent shrink-0">
+                  <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 text-accent shrink-0 group-hover:bg-accent group-hover:text-white transition-all duration-300">
                     <ShieldCheck size={24} aria-hidden="true" />
                   </div>
                   <div>

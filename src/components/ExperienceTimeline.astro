@@ -1,20 +1,24 @@
 ---
-import { experiences } from '../data/experience';
+import { getI18NData } from '../utils/i18n';
 import { Briefcase } from '@lucide/astro';
 import SectionHeader from './ui/SectionHeader.astro';
 import Card from './ui/Card.astro';
 import Badge from './ui/Badge.astro';
+
+const lang = Astro.currentLocale || 'es';
+const { experience: expData, ui } = getI18NData(lang);
+const { experiences } = expData;
 ---
 
-<section id="experiencia" class="section-padding" aria-labelledby="experience-title">
+<section id="experiencia" class="section-padding" aria-labelledby="experiencia-header">
   <div class="flex flex-col md:flex-row gap-12">
     <div class="md:w-1/3">
       <SectionHeader 
-        tag="Trayectoria" 
-        title="Experiencia Profesional" 
-        description="Enfoque en la creación de productos digitales robustos para instituciones financieras y logísticas, asegurando escalabilidad y eficiencia operativa."
+        id="experiencia-header"
+        tag={ui.sections.exp.tag} 
+        title={ui.sections.exp.title} 
+        description={ui.sections.exp.desc}
         centered={false}
-        id="experience-title"
       />
     </div>
 
@@ -22,17 +26,17 @@ import Badge from './ui/Badge.astro';
       <div class="absolute left-0 md:left-8 top-0 h-full w-[2px] bg-slate-200 dark:bg-slate-800 hidden sm:block" aria-hidden="true"></div>
 
       <ul class="space-y-12" aria-label="Línea de tiempo de experiencia profesional">
-        {experiences.map((exp) => (
-          <li>
+        {experiences.map((exp, index) => (
+          <li class="reveal-on-scroll" data-animation="slide-up" data-delay={index * 150}>
             <article class="relative pl-0 sm:pl-20 group hover:cursor-default">
-              <div class="absolute left-[-4px] sm:left-8 top-0 p-2 rounded-full border-4 border-white dark:border-slate-950 bg-slate-900 dark:bg-slate-800 text-white dark:text-accent z-10 hidden sm:block -translate-x-1/2" aria-hidden="true">
+              <div class="absolute left-[-4px] sm:left-8 top-0 p-2 rounded-full border-4 border-white dark:border-slate-950 bg-slate-900 dark:bg-slate-800 text-white dark:text-accent z-10 hidden sm:block -translate-x-1/2 group-hover:scale-110 transition-transform duration-300" aria-hidden="true">
                 <Briefcase size={16} />
               </div>
 
-              <Card class="group-hover:shadow-md">
+              <Card class="group-hover:shadow-md hover:border-accent group-hover:translate-x-1 transition-all">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
                   <div>
-                    <h3 class="text-xl font-bold dark:text-white">{exp.role}</h3>
+                    <h3 class="text-xl font-bold dark:text-white group-hover:text-accent transition-colors">{exp.role}</h3>
                     <p class="text-accent font-semibold">{exp.company}</p>
                   </div>
                   <time class="text-xs font-bold px-3 py-1 bg-slate-100 dark:bg-slate-800 text-slate-500 rounded-full w-fit">
@@ -51,7 +55,7 @@ import Badge from './ui/Badge.astro';
                 <ul class="flex flex-wrap gap-2" aria-label={`Tecnologías utilizadas en ${exp.company}`}>
                   {exp.technologies.map(tech => (
                     <li>
-                      <Badge variant="solid">{tech}</Badge>
+                      <Badge variant="solid" class="group-hover:bg-accent group-hover:text-white transition-colors">{tech}</Badge>
                     </li>
                   ))}
                 </ul>

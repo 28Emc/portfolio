@@ -1,36 +1,45 @@
 ---
-import { projects } from '../data/projects';
+import { getI18NData } from '../utils/i18n';
 import SectionHeader from './ui/SectionHeader.astro';
 import ProjectCard from './projects/ProjectCard.astro';
 import SimpleProjectCard from './projects/SimpleProjectCard.astro';
 import ProjectModal from './projects/ProjectModal.astro';
 
+const lang = Astro.currentLocale || 'es';
+const { projects: projData, ui } = getI18NData(lang);
+const { projects } = projData;
+
 const featuredProjects = projects.filter(p => p.isFeatured);
 const otherProjects = projects.filter(p => !p.isFeatured);
 ---
 
-<section id="proyectos" class="section-padding bg-slate-100/30 dark:bg-slate-900/10" aria-labelledby="projects-title">
+<section id="proyectos" class="section-padding bg-slate-100/30 dark:bg-slate-900/10" aria-labelledby="proyectos-header">
   <SectionHeader 
-    tag="Portafolio" 
-    title="Proyectos Destacados" 
+    id="proyectos-header"
+    tag={ui.sections.proj.tag} 
+    title={ui.sections.proj.title} 
   />
 
   <div class="space-y-20">
     <!-- Featured Projects Grid -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      {featuredProjects.map((project) => (
-        <ProjectCard project={project} />
+      {featuredProjects.map((project, index) => (
+        <div class="reveal-on-scroll" data-animation="fade-in" data-delay={index * 150}>
+          <ProjectCard project={project} />
+        </div>
       ))}
     </div>
 
     <!-- Secondary Projects Section -->
-    <div>
+    <div class="reveal-on-scroll" data-animation="fade-in">
       <h3 class="text-xl font-bold dark:text-white mb-8 border-l-4 border-slate-300 dark:border-slate-700 pl-4">
-        Otros proyectos relevantes
+        {ui.common.otherProjects}
       </h3>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {otherProjects.map((project) => (
-          <SimpleProjectCard project={project} />
+        {otherProjects.map((project, index) => (
+          <div class="reveal-on-scroll" data-animation="slide-up" data-delay={index * 100}>
+            <SimpleProjectCard project={project} />
+          </div>
         ))}
       </div>
     </div>

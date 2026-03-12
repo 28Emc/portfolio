@@ -1,25 +1,40 @@
 ---
-import { Menu, Moon, Sun } from '@lucide/astro';
-import { navItems } from '../data/info';
+import { Menu, Moon, Sun, Globe } from '@lucide/astro';
+import { getI18NData } from '../utils/i18n';
+
+const lang = Astro.currentLocale || 'es';
+const { info } = getI18NData(lang);
+const { navItems } = info;
+
+const locales = ['es', 'en', 'it'];
+const currentIndex = locales.indexOf(lang);
+const nextIndex = (currentIndex + 1) % locales.length;
+const nextLang = locales[nextIndex];
+const nextLangLabel = nextLang.toUpperCase();
+const nextLangHref = nextLang === 'es' ? `${import.meta.env.BASE_URL}/` : `${import.meta.env.BASE_URL}/${nextLang}/`;
 ---
 
 <nav
-  class="fixed top-0 left-0 w-full z-50 bg-white/80 dark:bg-[var(--bg-dark)]/80 backdrop-blur-md border-b border-slate-200 dark:border-[var(--border-dark)] transition-all duration-300"
+  id="main-nav"
+  class="fixed top-0 left-0 w-full z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 transition-all duration-300"
   role="navigation"
   aria-label="Navegación principal"
 >
+  <!-- Reading Progress Bar -->
+  <div id="reading-progress" class="absolute bottom-0 left-0 h-[2px] bg-accent transition-all duration-150 w-0" aria-hidden="true"></div>
+
   <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-    <a href="#hero" class="text-xl font-bold bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400 bg-clip-text text-transparent">
+    <a href="#hero" class="text-xl font-bold bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400 bg-clip-text text-transparent hover:scale-105 transition-transform group">
       EMC
     </a>
 
-    <div class="hidden md:flex items-center gap-8">
-      <ul class="flex items-center gap-8" role="list">
+    <div class="hidden md:flex items-center gap-6">
+      <ul class="flex items-center gap-6" role="list">
         {navItems.map(item => (
           <li>
             <a
               href={item.href}
-              class="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+              class="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-accent dark:hover:text-white transition-all hover:translate-y-[-1px]"
             >
               {item.label}
             </a>
@@ -27,17 +42,35 @@ import { navItems } from '../data/info';
         ))}
       </ul>
 
+      <div class="h-6 w-[1px] bg-slate-200 dark:bg-slate-800 ml-2" aria-hidden="true"></div>
+
+      <!-- Language Switcher -->
+      <a 
+        href={nextLangHref}
+        class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-accent hover:text-white transition-all"
+        aria-label={`Cambiar a ${nextLangLabel}`}
+      >
+        <Globe size={14} /> {nextLangLabel}
+      </a>
+
       <button
         id="theme-toggle"
-        class="ml-4 p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+        class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer group"
         aria-label="Alternar modo oscuro"
       >
-        <div class="block dark:hidden" aria-hidden="true"><Moon size={20} /></div>
-        <div class="hidden dark:block" aria-hidden="true"><Sun size={20} /></div>
+        <div class="block dark:hidden group-hover:rotate-12 transition-transform" aria-hidden="true"><Moon size={20} /></div>
+        <div class="hidden dark:block group-hover:rotate-12 transition-transform" aria-hidden="true"><Sun size={20} /></div>
       </button>
     </div>
 
     <div class="flex items-center gap-2 md:hidden">
+      <!-- Mobile Switchers -->
+      <a 
+        href={nextLangHref}
+        class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs font-bold"
+      >
+        {nextLangLabel}
+      </a>
       <button
         id="theme-toggle-mobile"
         class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
@@ -46,19 +79,20 @@ import { navItems } from '../data/info';
         <div class="block dark:hidden" aria-hidden="true"><Moon size={20} /></div>
         <div class="hidden dark:block" aria-hidden="true"><Sun size={20} /></div>
       </button>
-      <button class="p-2" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
+      <button class="p-2 cursor-pointer" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false">
         <Menu size={24} aria-hidden="true" />
       </button>
     </div>
   </div>
 
+  <!-- Mobile Menu -->
   <div id="mobile-menu" class="hidden md:hidden absolute top-16 left-0 w-full bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 p-6 shadow-xl">
     <ul class="flex flex-col gap-4" role="list">
       {navItems.map(item => (
         <li>
           <a
             href={item.href}
-            class="text-lg font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white block"
+            class="text-lg font-medium text-slate-600 dark:text-slate-400 hover:text-accent dark:hover:text-white block"
             onclick="document.getElementById('mobile-menu').classList.add('hidden')"
           >
             {item.label}
@@ -70,22 +104,52 @@ import { navItems } from '../data/info';
 </nav>
 
 <script>
-  const menuToggle = document.getElementById('menu-toggle');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const themeToggle = document.getElementById('theme-toggle');
-  const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+  /**
+   * Navbar Controller
+   * Handles Mobile Menu, Theme Toggle, and Reading Progress
+   */
+  const initNavbar = () => {
+    const elements = {
+      menuToggle: document.getElementById('menu-toggle'),
+      mobileMenu: document.getElementById('mobile-menu'),
+      themeToggle: document.getElementById('theme-toggle'),
+      themeToggleMobile: document.getElementById('theme-toggle-mobile'),
+      progressLine: document.getElementById('reading-progress')
+    };
 
-  menuToggle?.addEventListener('click', () => {
-    const isHidden = mobileMenu?.classList.toggle('hidden');
-    menuToggle.setAttribute('aria-expanded', (!isHidden).toString());
-  });
+    // --- Menu Toggle Logic ---
+    const toggleMenu = () => {
+      const isHidden = elements.mobileMenu?.classList.toggle('hidden');
+      elements.menuToggle?.setAttribute('aria-expanded', (!isHidden).toString());
+    };
 
-  const toggleTheme = () => {
-    const isDark = document.documentElement.classList.contains('dark');
-    document.documentElement.classList.toggle('dark', !isDark);
-    localStorage.setItem('theme', isDark ? 'light' : 'dark');
+    // --- Theme Toggle Logic ---
+    const toggleTheme = () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      document.documentElement.classList.toggle('dark', !isDark);
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+    };
+
+    // --- Reading Progress Logic ---
+    const updateProgress = () => {
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
+      if (elements.progressLine) {
+        elements.progressLine.style.width = `${progress}%`;
+      }
+    };
+
+    // Event Listeners
+    elements.menuToggle?.addEventListener('click', toggleMenu);
+    elements.themeToggle?.addEventListener('click', toggleTheme);
+    elements.themeToggleMobile?.addEventListener('click', toggleTheme);
+    window.addEventListener('scroll', updateProgress);
+
+    // Initial run for progress
+    updateProgress();
   };
 
-  themeToggle?.addEventListener('click', toggleTheme);
-  themeToggleMobile?.addEventListener('click', toggleTheme);
+  // Run on load and after transitions
+  initNavbar();
+  document.addEventListener('astro:after-swap', initNavbar);
 </script>

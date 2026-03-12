@@ -58,3 +58,41 @@ export interface SocialLink {
   platform: 'linkedin' | 'github' | 'phone' | 'email';
   label: string;
 }
+
+export interface UIStrings {
+  hero: {
+    expBtn: string;
+    projBtn: string;
+    cvBtn: string;
+    statusLabel: string;
+    cvAria: string;
+    expAria: string;
+    projAria: string;
+  };
+  sections: {
+    impact: { tag: string; title: string };
+    exp: { tag: string; title: string; desc: string };
+    proj: { tag: string; title: string };
+    stack: { tag: string; title: string };
+    edu: { 
+      tag: string; 
+      title: string; 
+      eduHeader: string; 
+      langHeader: string; 
+      certHeader: string; 
+    };
+    contact: { tag: string; title: string; desc: string };
+  };
+  common: {
+    problem: string;
+    solution: string;
+    result: string;
+    techs: string;
+    viewPreview: string;
+    close: string;
+    otherProjects: string;
+    madeWith: string;
+    and: string;
+    skipLink: string;
+  }
+}

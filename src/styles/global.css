@@ -4,6 +4,10 @@
 
 @theme {
   --color-accent: var(--accent-primary);
+  --color-bg-dark: var(--bg-dark);
+  --color-surface-dark: var(--surface-dark);
+  --color-text-dark: var(--text-dark);
+  --color-text-muted-dark: var(--text-muted-dark);
 }
 
 @layer base {
@@ -23,7 +27,7 @@
   }
 
   body {
-    @apply bg-slate-50 text-slate-900 transition-all duration-500 overflow-x-hidden;
+    @apply transition-all duration-500 overflow-x-hidden antialiased;
     font-family: 'Inter', system-ui, sans-serif;
   }
 
@@ -40,6 +44,35 @@
 
   .glass-card {
     @apply bg-white/80 backdrop-blur-md border border-slate-200 dark:bg-white/5 dark:border-white/10 transition-all duration-500 rounded-3xl;
+  }
+
+  /* Scroll Reveal Base Styles */
+  .reveal-on-scroll {
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+  }
+
+  .reveal-on-scroll[data-animation="fade-in"].is-visible {
+    opacity: 1;
+  }
+
+  .reveal-on-scroll[data-animation="slide-up"] {
+    transform: translateY(30px);
+  }
+
+  .reveal-on-scroll[data-animation="slide-up"].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-on-scroll[data-animation="scale-up"] {
+    transform: scale(0.95);
+  }
+
+  .reveal-on-scroll[data-animation="scale-up"].is-visible {
+    opacity: 1;
+    transform: scale(1);
   }
 
   .scrollbar-hide {
