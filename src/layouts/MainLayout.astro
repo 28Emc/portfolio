@@ -1,93 +1,107 @@
 ---
+import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 import ScrollToTop from '../components/ScrollToTop.astro';
 
 interface Props {
   title: string;
   description?: string;
+  image?: string;
+  canonicalURL?: string;
 }
 
 const {
   title,
-  description = "Portfolio profesional de Edinson Medina Chinga - Full Stack Developer."
+  description = "Desarrollador Full Stack con más de 4 años de experiencia en el sector financiero y logístico. Especialista en Angular, NestJS, Spring Boot y GCP.",
+  image = "/og-preview.png",
+  canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://28emc.github.io/portfolio/').href,
 } = Astro.props;
+
+const fullImageURL = new URL(image, Astro.site || 'https://28emc.github.io/portfolio/').href;
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/x-icon" href={`${import.meta.env.BASE_URL}/emc_favicon.ico`} />
     <meta name="generator" content={Astro.generator} />
 
+    <link rel="canonical" href={canonicalURL} />
+
     <title>{title}</title>
+    <meta name="title" content={title} />
     <meta name="description" content={description} />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={`${import.meta.env.BASE_URL}/og-image.png`} />
+    <meta property="og:image" content={fullImageURL} />
 
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={Astro.url} />
     <meta property="twitter:title" content={title} />
     <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={`${import.meta.env.BASE_URL}/og-image.png`} />
+    <meta property="twitter:image" content={fullImageURL} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <ClientRouter />
 
     <script is:inline>
-      const savedTheme = (() => {
-        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-          return localStorage.getItem('theme');
-        }
-        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-      })();
-      document.documentElement.classList.toggle('dark', savedTheme === 'dark');
-      window.localStorage.setItem('theme', savedTheme);
+      const themeInit = () => {
+        const savedTheme = (() => {
+          if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+            return localStorage.getItem('theme');
+          }
+          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        })();
+        document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+      };
+      themeInit();
+      document.addEventListener('astro:after-swap', themeInit);
     </script>
   </head>
-  <body class="transition-all duration-500 ease-in-out antialiased overflow-x-hidden">
+  <body class="transition-all duration-500 ease-in-out antialiased overflow-x-hidden bg-white dark:bg-slate-950">
     <slot />
     <ScrollToTop />
 
     <script>
-      const observerOptions = {
-        root: null,
-        rootMargin: '-20% 0px -70% 0px',
-        threshold: 0
+      const setupScrollSpy = () => {
+        const observerOptions = {
+          root: null,
+          rootMargin: '-20% 0px -70% 0px',
+          threshold: 0
+        };
+
+        const scrollSpyObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const id = entry.target.getAttribute('id');
+              if (id) updateActiveNavLink(id);
+            }
+          });
+        }, observerOptions);
+
+        function updateActiveNavLink(id: string) {
+          document.querySelectorAll('nav a, #mobile-menu a').forEach(link => {
+            const isActive = link.getAttribute('href') === `#${id}`;
+            link.classList.toggle('active-nav-link', isActive);
+            link.classList.toggle('text-accent', isActive);
+            link.classList.toggle('font-bold', isActive);
+            isActive ? link.setAttribute('aria-current', 'page') : link.removeAttribute('aria-current');
+          });
+        }
+
+        document.querySelectorAll('section[id]').forEach(section => scrollSpyObserver.observe(section));
       };
 
-      const scrollSpyObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            updateActiveNavLink(entry.target.getAttribute('id'));
-          }
-        });
-      }, observerOptions);
-
-      function updateActiveNavLink(id: string | null) {
-        if (!id) return;
-        document.querySelectorAll('nav a, #mobile-menu a').forEach(link => {
-          const isActive = link.getAttribute('href') === `#${id}`;
-          link.classList.toggle('active-nav-link', isActive);
-          link.classList.toggle('text-accent', isActive);
-          link.classList.toggle('font-bold', isActive);
-          isActive
-            ? link.setAttribute('aria-current', 'page')
-            : link.removeAttribute('aria-current');
-        });
-      }
-
-      document.querySelectorAll('section[id]').forEach(section => scrollSpyObserver.observe(section));
-      document.addEventListener('astro:after-swap', () => {
-        document.querySelectorAll('section[id]').forEach(section => scrollSpyObserver.observe(section));
-      });
+      setupScrollSpy();
+      document.addEventListener('astro:after-swap', setupScrollSpy);
     </script>
   </body>
 </html>

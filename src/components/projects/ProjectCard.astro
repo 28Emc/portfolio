@@ -1,4 +1,6 @@
 ---
+import type { ImageMetadata } from 'astro';
+import { getImage } from 'astro:assets';
 import type { Project } from '../../types';
 import { CheckCircle2, AlertCircle, Lightbulb, Star, Eye } from '@lucide/astro';
 import Card from '../ui/Card.astro';
@@ -10,6 +12,19 @@ interface Props {
 
 const { project } = Astro.props;
 const projectSlug = project.title.replace(/\s+/g, '-').toLowerCase();
+
+// Dynamic image resolution
+const images = import.meta.glob<{ default: ImageMetadata }>('../../assets/projects/*.{jpeg,jpg,png,gif}');
+let optimizedImageSrc = '';
+
+if (project.picImg) {
+  const imagePath = `../../assets/projects/${project.picImg}`;
+  if (images[imagePath]) {
+    const { default: metadata } = await images[imagePath]();
+    const optimized = await getImage({ src: metadata, format: 'webp' });
+    optimizedImageSrc = optimized.src;
+  }
+}
 ---
 
 <Card class="flex flex-col overflow-hidden group hover:border-accent ring-2 ring-accent/10 border-accent/20 hover:cursor-default" padding="none">
@@ -21,10 +36,10 @@ const projectSlug = project.title.replace(/\s+/g, '-').toLowerCase();
           {project.title}
         </h3>
       </div>
-      {project.picImg && (
+      {optimizedImageSrc && (
         <button
           class="project-image-trigger p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-accent hover:bg-slate-200 dark:hover:bg-slate-700 transition-all cursor-pointer"
-          data-image={`${import.meta.env.BASE_URL}/${project.picImg.startsWith('/') ? project.picImg.substring(1) : project.picImg}`}
+          data-image={optimizedImageSrc}
           aria-label={`Ver vista previa de ${project.title}`}
           title="Ver Vista Previa"
         >
