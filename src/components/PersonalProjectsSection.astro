@@ -1,5 +1,5 @@
 ---
-import type { ImageMetadata } from 'astro';
+import { getImage } from 'astro:assets';
 import { getI18NData } from '../utils/i18n';
 import { Code2, Rocket, Building2, ChefHat } from '@lucide/astro';
 import SectionHeader from './ui/SectionHeader.astro';
@@ -10,33 +10,34 @@ const lang = Astro.currentLocale || 'es';
 const { personalProjects: ppData, ui } = getI18NData(lang);
 const { personalProjects } = ppData;
 
-const statusConfig: Record<string, { label: string; color: string }> = {
-  mvp: { label: 'MVP', color: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400' },
-  development: { label: 'En desarrollo', color: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' },
-  idea: { label: 'Idea', color: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400' }
+const statusConfig: Record<string, { label: string }> = {
+  mvp: { label: 'MVP' },
+  development: { label: 'En desarrollo' },
+  idea: { label: 'Idea' }
 };
 
 const projectIcons = [Rocket, Building2, ChefHat] as const;
 
-let sgccImg: ImageMetadata | undefined;
-let transitOneImg: ImageMetadata | undefined;
-let mealMindImg: ImageMetadata | undefined;
+const projectImages: Record<string, string> = {};
 
-try {
-  sgccImg = (await import('../assets/projects/SGCC.png')).default;
-} catch {}
-try {
-  transitOneImg = (await import('../assets/projects/TransitOne.png')).default;
-} catch {}
-try {
-  mealMindImg = (await import('../assets/projects/MealMind.png')).default;
-} catch {}
-
-const imageMap: Record<string, ImageMetadata | undefined> = {
-  'SGCC': sgccImg,
-  'TransitOne Perú': transitOneImg,
-  'MealMind': mealMindImg,
-};
+async function loadImages() {
+  try {
+    const sgcc = (await import('../assets/projects/SGCC.png')).default;
+    const opt = await getImage({ src: sgcc, format: 'webp' });
+    projectImages['SGCC'] = opt.src;
+  } catch {}
+  try {
+    const transit = (await import('../assets/projects/TransitOne.png')).default;
+    const opt = await getImage({ src: transit, format: 'webp' });
+    projectImages['TransitOne Perú'] = opt.src;
+  } catch {}
+  try {
+    const meal = (await import('../assets/projects/MealMind.png')).default;
+    const opt = await getImage({ src: meal, format: 'webp' });
+    projectImages['MealMind'] = opt.src;
+  } catch {}
+}
+await loadImages();
 ---
 
 <section id="personal-proyectos" class="section-padding" aria-labelledby="personal-header">
@@ -48,20 +49,19 @@ const imageMap: Record<string, ImageMetadata | undefined> = {
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     {personalProjects.map((project, index) => {
-      const status = statusConfig[project.status] || statusConfig.mvp;
       const Icon = projectIcons[index] || Code2;
+      const statusLabel = statusConfig[project.status]?.label || 'MVP';
       return (
         <div class="reveal-on-scroll" data-animation="fade-in" data-delay={index * 150}>
-          <Card class="flex flex-col h-full overflow-hidden group hover:border-accent/40 border-dashed border-2 transition-all duration-300" padding="none">
-            {imageMap[project.title] && (
-              <div class="relative h-40 overflow-hidden bg-slate-100 dark:bg-slate-800">
+          <Card class="flex flex-col h-full overflow-hidden group hover:border-accent/40 border-dashed border-2 transition-all duration-300 tilt-card" padding="none">
+            {projectImages[project.title] && (
+              <div class="relative h-36 overflow-hidden bg-slate-100 dark:bg-slate-800">
                 <img
-                  src={imageMap[project.title].src}
+                  src={projectImages[project.title]}
                   alt={project.title}
                   class="w-full h-full object-contain p-4 group-hover:scale-105 transition-transform duration-500"
                   loading="lazy"
                 />
-                <div class="absolute inset-0 bg-gradient-to-t from-white/60 dark:from-slate-950/60 to-transparent" aria-hidden="true"></div>
               </div>
             )}
 
@@ -71,8 +71,8 @@ const imageMap: Record<string, ImageMetadata | undefined> = {
                   <Icon size={18} class="text-accent shrink-0" aria-hidden="true" />
                   <h3 class="text-xl font-bold dark:text-white group-hover:text-accent transition-colors">{project.title}</h3>
                 </div>
-                <span class={`shrink-0 text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider ${status.color}`}>
-                  {status.label}
+                <span class="shrink-0 text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-widest border border-amber-400/40 text-amber-600 dark:text-amber-400">
+                  {statusLabel}
                 </span>
               </div>
 
@@ -108,3 +108,27 @@ const imageMap: Record<string, ImageMetadata | undefined> = {
     })}
   </div>
 </section>
+
+<script>
+  const initTilt = () => {
+    const cards = document.querySelectorAll('.tilt-card');
+    cards.forEach(card => {
+      const cardEl = card as HTMLElement;
+      const handleMove = (e: MouseEvent) => {
+        const { left, top, width, height } = cardEl.getBoundingClientRect();
+        const x = (e.clientX - left) / width;
+        const y = (e.clientY - top) / height;
+        const tiltX = (y - 0.5) * 10;
+        const tiltY = (x - 0.5) * -10;
+        cardEl.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)`;
+      };
+      const handleLeave = () => {
+        cardEl.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+      };
+      cardEl.addEventListener('mousemove', handleMove);
+      cardEl.addEventListener('mouseleave', handleLeave);
+    });
+  };
+  initTilt();
+  document.addEventListener('astro:after-swap', initTilt);
+</script>
