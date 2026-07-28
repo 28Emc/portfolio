@@ -9,6 +9,7 @@ export const experiences: Experience[] = [
             "Desarrollo end-to-end de sistemas web para empresas de factoring, logística, e-commerce y contact center.",
             "Implementación de arquitecturas de microservicios y APIs REST escalables con Java (Spring Boot), Node.js (NestJS/Express) y PHP (Laravel).",
             "Construcción de frontends modulares con Angular (Standalone Components), React y Astro, priorizando rendimiento y SEO.",
+            "Validación de autenticación y consumo de APIs REST mediante pruebas unitarias (Jasmine, Karma, Jest) en servicios y controladores.",
             "Configuración de pipelines CI/CD y despliegues en Google Cloud Platform (Cloud Run, VMs, Buckets)."
         ],
         technologies: ["Angular", "TypeScript", "Java", "Spring Boot", "NestJS", "Express", "Laravel", "React", "Astro", "GCP", "Docker"]

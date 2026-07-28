@@ -12,13 +12,21 @@ interface Props {
 
 const {
   title,
-  description = "Backend Developer (Java & Spring Boot) con más de 5 años de experiencia en los sectores financiero y logístico. Especialista en Clean Architecture, DDD y Cloud.",
+  description: customDescription,
   image = "/og-preview.png",
   canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://28emc.github.io/portfolio/').href,
 } = Astro.props;
 
 const language = Astro.currentLocale || 'es';
 const fullImageURL = new URL(image, Astro.site || 'https://28emc.github.io/portfolio/').href;
+
+const defaultDescriptions: Record<string, string> = {
+  es: "Backend Developer (Java & Spring Boot) con más de 5 años de experiencia en los sectores financiero y logístico. Especialista en Clean Architecture, DDD y Cloud.",
+  en: "Backend Developer (Java & Spring Boot) with over 5 years of experience in the financial and logistics sectors. Specialist in Clean Architecture, DDD and Cloud.",
+  it: "Backend Developer (Java & Spring Boot) con oltre 5 anni di esperienza nei settori finanziario e logistico. Specialista in Clean Architecture, DDD e Cloud."
+};
+
+const resolvedDescription = customDescription ?? defaultDescriptions[language] ?? defaultDescriptions.es;
 ---
 
 <!doctype html>
@@ -33,18 +41,18 @@ const fullImageURL = new URL(image, Astro.site || 'https://28emc.github.io/portf
 
     <title>{title}</title>
     <meta name="title" content={title} />
-    <meta name="description" content={description} />
+    <meta name="description" content={resolvedDescription} />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content={Astro.url} />
     <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
+    <meta property="og:description" content={resolvedDescription} />
     <meta property="og:image" content={fullImageURL} />
 
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={Astro.url} />
     <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
+    <meta property="twitter:description" content={resolvedDescription} />
     <meta property="twitter:image" content={fullImageURL} />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
