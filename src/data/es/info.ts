@@ -5,7 +5,7 @@ export const profileInfo: ProfileInfo = {
   title: "Backend Developer (Java & Spring Boot) | Full Stack Engineer",
   bio: "Más de 5 años diseñando APIs REST y sistemas escalables con **Java, Spring Boot** y arquitecturas modernas (Clean Architecture, DDD, SOLID) en los sectores financiero, logístico y cobranzas. Experiencia Full Stack con Angular, React y **Astro**; desarrollo backend con **NestJS** y Express; desplegando en GCP con prácticas de CI/CD.",
   availability: "Disponible para nuevos proyectos",
-  cvFile: "CV_EdinsonMedinaChinga_2026.pdf"
+  cvFile: "CV_Edinson_Medina_Chinga_ATS.pdf"
 };
 
 export const socialLinks: SocialLink[] = [

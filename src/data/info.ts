@@ -5,7 +5,7 @@ export const profileInfo: ProfileInfo = {
   title: "Desarrollador Full Stack",
   bio: "Más de 4 años creando soluciones escalables en los sectores financiero, logístico y cobranzas. Especializado en arquitecturas modernas con **Angular, NestJS, Spring Boot y GCP**, optimizando flujos operativos y rendimiento web.",
   availability: "Disponible para nuevos proyectos",
-  cvFile: "CV_EdinsonMedinaChinga_2026.pdf"
+  cvFile: "CV_Edinson_Medina_Chinga_ATS.pdf"
 };
 
 export const socialLinks: SocialLink[] = [
