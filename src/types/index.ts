@@ -11,6 +11,15 @@ export interface Metric {
   label: string;
 }
 
+export interface PersonalProject {
+  title: string;
+  description: string;
+  status: 'mvp' | 'development' | 'idea';
+  architectureHighlights: string[];
+  technologies: string[];
+  picImg?: string;
+}
+
 export interface Project {
   title: string;
   description: string;
@@ -73,6 +82,7 @@ export interface UIStrings {
     impact: { tag: string; title: string };
     exp: { tag: string; title: string; desc: string };
     proj: { tag: string; title: string };
+    personalProj: { tag: string; title: string };
     stack: { tag: string; title: string };
     edu: { 
       tag: string; 

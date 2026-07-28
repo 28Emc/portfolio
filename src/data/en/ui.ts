@@ -14,6 +14,7 @@ export const ui: UIStrings = {
     impact: { tag: "Measurable Impact", title: "Business-driven results" },
     exp: { tag: "Trajectory", title: "Professional Experience", desc: "Focus on creating robust digital products for financial and logistics institutions, ensuring scalability and operational efficiency." },
     proj: { tag: "Portfolio", title: "Featured Projects" },
+    personalProj: { tag: "Own Initiative", title: "Personal Projects" },
     stack: { tag: "Ecosystem", title: "Tech Stack" },
     edu: { 
       tag: "Education", 

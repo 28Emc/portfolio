@@ -2,8 +2,8 @@ import type { ProfileInfo, SocialLink } from '../../types';
 
 export const profileInfo: ProfileInfo = {
   name: "Edinson Medina Chinga",
-  title: "Desarrollador Full Stack",
-  bio: "Más de 4 años creando soluciones escalables en los sectores financiero, logístico y cobranzas. Especializado en arquitecturas modernas con **Angular, NestJS, Spring Boot y GCP**, optimizando flujos operativos y rendimiento web.",
+  title: "Backend Developer (Java & Spring Boot) | Full Stack Engineer",
+  bio: "Más de 5 años diseñando APIs REST y sistemas escalables con **Java, Spring Boot** y arquitecturas modernas (Clean Architecture, DDD, SOLID) en los sectores financiero, logístico y cobranzas. Experiencia Full Stack con Angular y React, desplegando en GCP con prácticas de CI/CD.",
   availability: "Disponible para nuevos proyectos",
   cvFile: "CV_EdinsonMedinaChinga_2026.pdf"
 };
@@ -36,6 +36,7 @@ export const navItems = [
   { label: 'Impacto', href: '#impacto' },
   { label: 'Experiencia', href: '#experiencia' },
   { label: 'Proyectos', href: '#proyectos' },
+  { label: 'Personales', href: '#personal-proyectos' },
   { label: 'Stack', href: '#stack' },
   { label: 'Educación', href: '#educacion' },
   { label: 'Contacto', href: '#contacto' },

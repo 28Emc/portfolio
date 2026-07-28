@@ -4,33 +4,33 @@ export const experiences: Experience[] = [
     {
         company: "Freelance",
         role: "Full Stack Developer",
-        period: "November 2021 - October 2025",
+        period: "November 2021 - December 2025",
         description: [
-            "Frontend and full stack development for various sectors (Fintech, Logistics, E-commerce).",
-            "Implementation of microservices architectures and scalable REST APIs.",
-            "Optimization of operational workflows and automation of deployments on GCP.",
-            "Technical leadership in consolidating legacy systems into modern platforms."
+            "End-to-end web systems development for factoring, logistics, e-commerce, and contact center companies.",
+            "Implementation of microservices architectures and scalable REST APIs with Java (Spring Boot), Node.js (NestJS/Express) and PHP (Laravel).",
+            "Modular frontends built with Angular (Standalone Components), React and Astro, prioritizing performance and SEO.",
+            "CI/CD pipeline configuration and deployments on Google Cloud Platform (Cloud Run, VMs, Buckets)."
         ],
-        technologies: ["Angular", "TypeScript", "Astro", "Spring Boot", "NestJS", "GCP", "Docker"]
+        technologies: ["Angular", "TypeScript", "Java", "Spring Boot", "NestJS", "Express", "Laravel", "React", "Astro", "GCP", "Docker"]
     },
     {
         company: "Digital Factoring",
         role: "Junior Developer",
         period: "August 2020 - August 2021",
         description: [
-            "Redesign of key financial intranet/extranet modules, improving usability by 30%.",
-            "Integration of Angular with Laravel and/or Spring Boot to stabilize electronic factoring processes.",
-            "Documentation of functional flows and collaboration on deployments within Dev-Test-Prod cycles."
+            "Redesign of key financial intranet/extranet modules, contributing to a 30% usability improvement per internal feedback.",
+            "Integration of Angular and Spring Boot to stabilize electronic factoring processes.",
+            "Documentation of functional flows and collaboration on GCP deployments within Dev-Test-Prod cycles."
         ],
-        technologies: ["Angular", "TypeScript", "Laravel", "Spring Boot", "GCP"]
+        technologies: ["Angular", "TypeScript", "Spring Boot", "Laravel", "GCP"]
     },
     {
         company: "ITBCP",
         role: "Programming Intern",
         period: "September 2019 - December 2019",
         description: [
-            "Support in gathering and analyzing requirements.",
-            "Implementation and documentation of internal technological solutions."
+            "Support in gathering requirements and prototyping for internal process automation.",
+            "Implementation, documentation, and traceability of technological solutions."
         ],
         technologies: ["HTML/CSS", "JavaScript", "SQL Server", "ASP.NET"]
     }

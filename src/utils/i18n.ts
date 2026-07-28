@@ -16,16 +16,20 @@ import * as itMetrics from '../data/it/metrics';
 import * as esStack from '../data/es/stack';
 import * as enStack from '../data/en/stack';
 import * as itStack from '../data/it/stack';
+import * as esPersonalProj from '../data/es/personalProjects';
+import * as enPersonalProj from '../data/en/personalProjects';
+import * as itPersonalProj from '../data/it/personalProjects';
 import { ui as esUI } from '../data/es/ui';
 import { ui as enUI } from '../data/en/ui';
 import { ui as itUI } from '../data/it/ui';
-import type { Experience, Metric, Project, StackCategory, Education, Language, Certification, ProfileInfo, SocialLink, UIStrings } from '../types';
+import type { Experience, Metric, Project, PersonalProject, StackCategory, Education, Language, Certification, ProfileInfo, SocialLink, UIStrings } from '../types';
 
 interface I18NData {
   info: { profileInfo: ProfileInfo; socialLinks: SocialLink[]; navItems: { label: string; href: string }[] };
   experience: { experiences: Experience[] };
   education: { educationItems: Education[]; languageItems: Language[]; certificationItems: Certification[] };
   projects: { projects: Project[] };
+  personalProjects: { personalProjects: PersonalProject[] };
   metrics: { metrics: Metric[] };
   stack: { stack: StackCategory[] };
   ui: UIStrings;
@@ -39,6 +43,7 @@ const DATA_MAP: Record<string, I18NData> = {
     projects: esProj,
     metrics: esMetrics,
     stack: esStack,
+    personalProjects: esPersonalProj,
     ui: esUI,
   },
   en: {
@@ -48,6 +53,7 @@ const DATA_MAP: Record<string, I18NData> = {
     projects: enProj,
     metrics: enMetrics,
     stack: enStack,
+    personalProjects: enPersonalProj,
     ui: enUI,
   },
   it: {
@@ -57,6 +63,7 @@ const DATA_MAP: Record<string, I18NData> = {
     projects: itProj,
     metrics: itMetrics,
     stack: itStack,
+    personalProjects: itPersonalProj,
     ui: itUI,
   }
 };

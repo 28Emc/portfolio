@@ -2,8 +2,8 @@ import type { ProfileInfo, SocialLink } from '../../types';
 
 export const profileInfo: ProfileInfo = {
   name: "Edinson Medina Chinga",
-  title: "Full Stack Developer",
-  bio: "Over 4 years creating scalable solutions in the financial, logistics, and debt collection sectors. Specialized in modern architectures with **Angular, NestJS, Spring Boot, and GCP**, optimizing operational flows and web performance.",
+  title: "Backend Developer (Java & Spring Boot) | Full Stack Engineer",
+  bio: "Over 5 years designing scalable REST APIs and systems with **Java, Spring Boot** and modern architectures (Clean Architecture, DDD, SOLID) in the financial, logistics, and debt collection sectors. Full Stack experience with Angular and React, deploying on GCP with CI/CD practices.",
   availability: "Available for new projects",
   cvFile: "CV_EdinsonMedinaChinga_2026.pdf"
 };
@@ -36,6 +36,7 @@ export const navItems = [
   { label: 'Impact', href: '#impacto' },
   { label: 'Experience', href: '#experiencia' },
   { label: 'Projects', href: '#proyectos' },
+  { label: 'Personal', href: '#personal-proyectos' },
   { label: 'Stack', href: '#stack' },
   { label: 'Education', href: '#educacion' },
   { label: 'Contact', href: '#contacto' },

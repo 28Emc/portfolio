@@ -14,6 +14,7 @@ export const ui: UIStrings = {
     impact: { tag: "Impacto Medible", title: "Resultados que impulsan el negocio" },
     exp: { tag: "Trayectoria", title: "Experiencia Profesional", desc: "Enfoque en la creación de productos digitales robustos para instituciones financieras y logísticas, asegurando escalabilidad y eficiencia operativa." },
     proj: { tag: "Portafolio", title: "Proyectos Destacados" },
+    personalProj: { tag: "Iniciativa Propia", title: "Proyectos Personales" },
     stack: { tag: "Ecosistema", title: "Stack Tecnológico" },
     edu: { 
       tag: "Formación", 
